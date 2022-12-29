@@ -310,6 +310,16 @@ isbn=false		% Keine Ausbage der ISBN
 	\section{Vorwort}
 		\label{ch:vorwort}
 
+	Ziel dieser Arbeit ist es, eine Analyse zu diesem Datensatz:  zu liefern. Dabei findet eine Analyse der 
+	Daten statt. Die Daten werden visuell in Form von Diagrammen aufbereitet und die grobe Werteverteilungen
+	der Symptome beziehungsweise Features vorgestellt. Zudem findet eine Korrelationsanalyse statt, in welcher die 
+	Daten auf gegenseitige Zusammenhänge geprüft werden statt. Danach werden die Daten getestet sowie trainiert, die
+	verwendeten Modelle als auch entsprechenden Genauigkeiten dargestellt. Der letzte Schritt dieser Studienarbeit,
+	besteht daraus, dass ein Neuronales Netz auf die Daten angewendet wird und die entsprechenden Genauigkeiten
+	berechent werden. 
+
+	Als Anwendung wird in dieser Studienarbeit Klassifikation verwendet. 
+	
 
 	\section{Analyse der Daten}
 		\label{ch:analyse_daten}
@@ -334,17 +344,22 @@ isbn=false		% Keine Ausbage der ISBN
 
 	Die Werteverteilung der Features, welche \url{bool} Werte enhalten, ist in dieser Tabelle aufgelistet: 
 	
+	\begin{singlespace}
 	\begin{table}[H]
-		\centering
+		\begin{adjustbox}{width=1\textwidth}
+			\small
 		\begin{tabular}{|l|l|l|l|l|l|l|l|}
 			\hline  & \url{RectalPain}&  \url{SoreThroat}	& \url{PenileOedema} & \url{OralLesion} & \url{SolitaryLesion} &\url{SwollenTonsils} & \url{HIVInfection} \\
 			\hline True & 12345 & 12554 & 12612 & 12486 & 12527 & 12533 & 12584   \\
 			\hline False & 12655 & 12446 & 12388& 12514 & 12473 & 12467 & 12416 \\
 			\hline
 		\end{tabular}
+	\end{adjustbox}
 		\caption{Werteverteilung der verschiedenen Features} %Hinzufügen einer Tabellenbeschriftung
 		\label{tab:werteverteilung_features}
 	\end{table}
+\end{singlespace}
+	
 
 	Es lässt sich feststellen, dass die Werteverteilung innerhalb der \url{bool} Features sehr gleichmäßig ist. 
 	In Bezug auf die \url{str} Feature (\url{SystemicIllness}) lässt sich die Wertevereilung, durch dieses Diagramm
@@ -353,21 +368,56 @@ isbn=false		% Keine Ausbage der ISBN
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/systemic_illness_plot.png}
-		\captionof{figure}[Werteverteilung des Feature \url{SystemicIllness}]{Werteverteilung des Feature \url{SystemicIllness}}
+		\captionof{figure}[Werteverteilung des Feature \url{Systemic_Illness}]{Werteverteilung des Feature \url{Systemic_Illness}}
 		\label{fig:systemic_illness_plot}
 	\end{figure}
 
-	In Betracht auf auf Spalte \url{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \url{Negative} sind,
-	also nicht Affenpocken erkrankt sind. 
+	Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \url{Fever} oder \url{Swollen Lymph Nodes} leiden, zu einer
+	vielen höheren Wahrscheinlichkeit an Affenpocken erkrankt sind, als Patienten, die an keiner Symptomatik (\url{None}) oder \url{MuscleAchesandPain} leiden.
 
+	In Betracht auf Spalte \url{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \url{Negative} sind,
+	also nicht Affenpocken erkrankt sind. Diese Werteverteilung würde sich visuell folgendermaßen äußern:
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/monkey_pox_plot.png}
+		\captionof{figure}[Werteverteilung der Ergebnis-Spalte \url{MonkeyPox}]{Werteverteilung der Ergebnis-Spalte \url{MonkeyPox}}
+		\label{fig:monkey_pox_plot}
+	\end{figure}
+
+	\subsection{Korrelationsanalyse}
+		\label{ch:korrleations_analyse}
+
+	Zur Prüfung, ob Zusammenhänge zwischen den einzelnen Feautres besteht, wird eine Heatmap verwendet. 
+	Eine Heatmap ist eine Zusammenstellung von Rechtecken. Sie kann genutzt werden, um Muster und Veränderungen im
+	Zeitverlauf zu betrachten. Die x-Achse wird oft mit einem Zeitmaß bezeichnet. Die y-Achse stellt eine Variable dar, 
+	welche die Kategorie in den Daten definiert. In Betracht auf den vorliegenden Datensatz ergibt sich die folgende Heatmap:
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/heat_map.png}
+		\captionof{figure}[Die aus den Features resultierende Heatmap]{Die aus den Features resultierende Heatmap}
+		\label{fig:heatmap}
+	\end{figure}
 	
+	Beim Betracht von Abbildung \ref{fig:heatmap}, lässt sich also feststellen, das die berechneten Wahrscheinlichkeiten sich in einem Promille beziehungsweise 
+	negativen Bereich befinde. Es bestehen somit das keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
 
-	\subsection{Visuelle Analyse}
-		\label{ch:visuelle_analyse}
+	Ein weiterer Schritt in der Korrelationsananlyse, stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
+	Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \url{Systemic_Illness}, als eigene Spalten transponiert werden. 
+	Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \url{Systemic_Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Featurekombinationen 
+	getestet werden können. Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
 
-	Zur visuellen Analyse der Daten wurden zum großen Teil, Balkendiagramme verwendet. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/tranp_df.png}
+		\captionof{figure}[Ausschnitt aus Datensatz mit transponiertem Feature \url{Systemic_Illness}]{Ausschnitt aus Datensatz mit transponiertem Feature \url{Systemic_Illness}}
+		\label{fig:transp_feature}
+	\end{figure}
 
-	
+	Die Analyse dieser Werte stützt die gesammelten Erkenntnisse aus der Heatmap. Die maximale Konfidenz ist 0.604167, der entsprechende Lift:
+	1.104538. Es ist demnach festzustellen, dass die Werte sich gegenseitig wenig bis garnicht beeinflussen beziehungsweise nicht zusammenhängen. 
+
 
 		\pagebreak
 		%-------------------------------------------------------------------------------------
@@ -435,85 +485,7 @@ isbn=false		% Keine Ausbage der ISBN
 		%\printglossary[type=\acronymtype,style=alttree,title=,toctitle=] %automatischen Titel und Gliederungsbeschriftung unterdrücken - sonst steht da Glossarie
 		\newpage
 
-		% % ---------------------------------------------------------------------------------
-		% % Anhang
-		% % ---------------------------------------------------------------------------------
-		\rhead{Anhang}        %Kopftextbeschriftung
-		\begin{appendix}
-			\phantomsection \label{Anhang}
-			\section*{Anhang}\addcontentsline{toc}{section}{Anhang} %Anhang ohne Nummer
-			\renewcommand{\thesection}{\Roman{section}}
-
-			\setcounter{section}{0} %Counter für Nummerierung der Anhänge initalisieren
-			\section{Remotenutzung der CIP-Pool-Rechner}
-			\label{app:remotenutzung}
-			Für die Remotenutzung der CIP-Pool-Rechner sind folgende Schritte zu vollziehen. \\
-			Es sei angemerkt, dass nach aktuellem Stand (09.12.2020) die CIP-Pool-Rechner bis März 2021 zur Remotenutzung zur Verfügung stehen.
-			
-			\begin{enumerate}
-				\item Eine Verbindung mit dem Hochschulnetz muss aufgebaut werden. Dies ist mittels VPN (siehe \href{https://www.oth-regensburg.de/supportwiki/doku.php?id=public:netz:vpn-forticlient}{\underline{Anleitung}}) möglich.
-				
-				\item Die Seite \url{https://remote-cip-wa.hs-regensburg.de/RDWeb/} muss aufgerufen werden. \\
-				Im Anschluss muss die Anmeldung mittels NDS-Kennung im Format \textbf{HSR\textbackslash}abc12345 erfolgen.
-				
-					% \begin{figure}[H]
-      				% \centering
-        			% \includegraphics[width=1\textwidth]{Bilder/201209_Remote1}
-        			% \caption{CIP-Pool-Remotenutzung: Anmeldung auf Website}
-        			% \label{fig:201209_Remote1}
-        			% \end{figure}				
-				\smallskip
-				\item Nach erfolgter Anmeldung ist durch einen Mausklick der CIP-Pool auszuwählen, dessen Rechner man nutzen möchte. In dieser Anleitung wird der CIP-Pool der Maschinenbau-Fakultät ausgewählt.
-				
-					% \begin{figure}[H]
-      				% \centering
-        			% \includegraphics[width=1\textwidth]{Bilder/201209_Remote2}
-        			% \caption{CIP-Pool-Remotenutzung: Auswahl des CIP-Pools}
-        			% \label{fig:201209_Remote2}
-        			% \end{figure}
-				
-				\item Die aufkommende Meldung ist zu bestätigen. Es wird ein Öffnen mit der Standardanwendung empfohlen.
-
-					% \begin{figure}[H]
-      				% \centering
-        			% \includegraphics[width=1\textwidth]{Bilder/201209_Remote3}
-        			% \caption{CIP-Pool-Remotenutzung: Öffnen der Anwendung zur Remote Desktop Connection}
-        			% \label{fig:201209_Remote3}
-        			% \end{figure}				
-				\medskip
-				\item Die aufkommende Meldung ist durch Klicken auf \glqq Verbinden\grqq{} zu bestätigen.
-
-					% \begin{figure}[H]
-      				% \centering
-        			% \includegraphics[width=1\textwidth]{Bilder/201209_Remote4}
-        			% \caption{CIP-Pool-Remotenutzung: Bestätigen der Verbindung}
-        			% \label{fig:201209_Remote4}
-        			% \end{figure}				
-				
-				\item Bevor der CIP-Rechner nun genutzt werden kann, muss erneut eine Anmeldung mittels NDS-Kennung im Format \textbf{HSR\textbackslash}abc12345 erfolgen.
-				
-					% \begin{figure}[H]
-      				% \centering
-        			% \includegraphics[height=0.3\textheight]{Bilder/201209_Remote5}
-        			% \caption{CIP-Pool-Remotenutzung: erneute Anmeldung}
-        			% \label{fig:201209_Remote5}
-        			% \end{figure}				
-				\medskip
-				\item Wenn der CIP-Rechner nicht mehr benötigt wird, ist eine Abmeldung des Benutzers durchzuführen.
-				
-					% \begin{figure}[H]
-      				% \centering
-        			% \includegraphics[width=1\textwidth]{Bilder/201209_Remote6}
-        			% \caption{CIP-Pool-Remotenutzung: Abmeldung des Benutzers}
-        			% \label{fig:201209_Remote6}
-        			% \end{figure}				
-				
-			\end{enumerate}	
-			
-			
-		\end{appendix}
     
 \pagebreak
-\input{tex/Ehrenwoertliche-Erklaerung}
 
 	\end{document}
