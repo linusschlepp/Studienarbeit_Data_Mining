@@ -110,7 +110,7 @@ isbn=false		% Keine Ausbage der ISBN
 \renewcommand*{\labelnamepunct}{\addcolon\addspace}
 
 %Zusätzliche für Umbrüche für Kleinbuchstaben z.B. in URLs
-\appto\UrlBreaks{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j
+\appto\lstinlineBreaks{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j
 	\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w
 	\do\x\do\y\do\z}
 
@@ -318,17 +318,25 @@ isbn=false		% Keine Ausbage der ISBN
 	besteht daraus, dass ein Neuronales Netz auf die Daten angewendet wird und die entsprechenden Genauigkeiten
 	berechent werden. 
 
-	Als Anwendung wird in dieser Studienarbeit Klassifikation verwendet. 
+	Klassfikation wird in dieser Studienarbeit als Anwendung verwendet. 
 	
 
 	\section{Analyse der Daten}
 		\label{ch:analyse_daten}
 
-	In diesem Kapitel findet eine Analyse der vorliegenden Daten statt. Der Datensatz weißt insgesamt 25000 Zeilen und 11 Spalten auf, davon sind 
-	neun Features, einer ist der Index und einer stellt die Ergebnis-Spalte dar. Damit Funktionen, wie \url{pandas.DataFrame.replace} und 
-	\url{pandas.DataFrame.query} problemlos verwendet werden können, war es notwendig, die Leerzeichen in den Spaltenbennenungen mit Unterstrichen zu ersetzen. 
-	So wurde beispielsweise \url{Systmic Illness} zu \url{Systemic_Illness}.  Die Spalte \url{Patient_ID} wurde als Index verwendet. 
-	\url{MonkeyPox} stellt die Ergebnis-Spalte dar. Das folgende Bild zeigt die Aufteilung der Spalten und die korrespondierenden Werte:
+	In diesem Kapitel findet eine Analyse der vorliegenden Daten statt. Zunächst findet eine oberflächliche Analyse des Datensatzes statt, in dieser
+	wird festgestellt, wie viele Featues der Datensatz enthält, wie viele Zeilen und Spalten er hat. Der nächste Schritt der Analyse stellt die Korrelationsanalyse
+	statt, dabei ist das Ziel, mögliche Zusammenhänge und Korrelationen in den Features zu erkennen. 
+
+	\subsection{Oberflächliche Datenanalyse}
+		\label{ch:oberflaechliche_analyse}
+
+	Der Datensatz weißt insgesamt 25000 Zeilen und 11 Spalten auf, davon sind 
+	neun Features, einer ist der Index und einer stellt die Ergebnis-Spalte dar. Damit Funktionen, wie \lstinline{pandas.DataFrame.replace} und 
+	\lstinline{pandas.DataFrame.query} problemlos verwendet werden können, war es notwendig, die Leerzeichen in den Spaltenbennenungen mit Unterstrichen zu ersetzen. 
+	So wurde beispielsweise \lstinline{Systmic Illness} zu \lstinline{Systemic_Illness}. \lstinline{Sexually Transmitted Infection} wird aufgrund der Länge, auf
+	\lstinline{STI} gekürzt. Die Spalte \lstinline{Patient_ID} wurde als Index verwendet. 
+	\lstinline{MonkeyPox} stellt die Ergebnis-Spalte dar. Das folgende Bild zeigt die Aufteilung der Spalten und die korrespondierenden Werte:
 
 	\begin{figure}[H]
 		\centering
@@ -337,21 +345,21 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:data_table}
 	\end{figure}
 
-	Bei den Werten der Features handelt es sich zu einem großen Teil, um \url{bool} Werte. Die Spalte \url{Systemic Illness}, stellt dabei eine Ausnahme dar. In dieser werden
-	vier \url{str} Werte verwendet: \url{None}, \url{Fever}, \url{Swollen Lymph Nodes} und \url{Muscel Aches and Pain} in \url{int} Werte umgewandelt. So wurde \url{None} zu 1,
-	\url{Fever} zu 2, \url{Swollen Lymph Nodes} zu 3 und \url{Muscle Aches and Pain} zu 4. Die Spalte \url{MonkeyPox} enthält die Werte \url{Positive} und \url{Negative} und gibt
+	Bei den Werten der Features handelt es sich zu einem großen Teil, um \lstinline{bool} Werte. Die Spalte \lstinline{Systemic Illness}, stellt dabei eine Ausnahme dar. In dieser werden
+	vier \lstinline{str} Werte verwendet: \lstinline{None}, \lstinline{Fever}, \lstinline{Swollen Lymph Nodes} und \lstinline{Muscel Aches and Pain} in \lstinline{int} Werte umgewandelt. So wurde \lstinline{None} zu 1,
+	\lstinline{Fever} zu 2, \lstinline{Swollen Lymph Nodes} zu 3 und \lstinline{Muscle Aches and Pain} zu 4. Die Spalte \lstinline{MonkeyPox} enthält die Werte \lstinline{Positive} und \lstinline{Negative} und gibt
 	an, ob der entsprechende Patient an Affenpocken erkrankt ist.
 
-	Die Werteverteilung der Features, welche \url{bool} Werte enhalten, ist in dieser Tabelle aufgelistet: 
+	Die Werteverteilung der Features, welche \lstinline{bool} Werte enhalten, ist in dieser Tabelle aufgelistet: 
 	
 	\begin{singlespace}
 	\begin{table}[H]
 		\begin{adjustbox}{width=1\textwidth}
 			\small
-		\begin{tabular}{|l|l|l|l|l|l|l|l|}
-			\hline  & \url{RectalPain}&  \url{SoreThroat}	& \url{PenileOedema} & \url{OralLesion} & \url{SolitaryLesion} &\url{SwollenTonsils} & \url{HIVInfection} \\
-			\hline True & 12345 & 12554 & 12612 & 12486 & 12527 & 12533 & 12584   \\
-			\hline False & 12655 & 12446 & 12388& 12514 & 12473 & 12467 & 12416 \\
+		\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+			\hline  & \url{Rectal_Pain}&  \url{Sore_Throat}	& \url{Penile_Oedema} & \url{Oral_Lesion} & \url{Solitary_Lesion} &\url{Swollen_Tonsils} & \url{HIV_Infection} & \url{STI} \\
+			\hline True & 12345 & 12554 & 12612 & 12486 & 12527 & 12533 & 12584  & 12446 \\
+			\hline False & 12655 & 12446 & 12388& 12514 & 12473 & 12467 & 12416 & 12554\\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -361,27 +369,27 @@ isbn=false		% Keine Ausbage der ISBN
 \end{singlespace}
 	
 
-	Es lässt sich feststellen, dass die Werteverteilung innerhalb der \url{bool} Features sehr gleichmäßig ist. 
-	In Bezug auf die \url{str} Feature (\url{SystemicIllness}) lässt sich die Wertevereilung, durch dieses Diagramm
+	Es lässt sich feststellen, dass die Werteverteilung innerhalb der \lstinline{bool} Features sehr gleichmäßig ist. 
+	In Bezug auf die \lstinline{str} Feature (\lstinline{SystemicIllness}) lässt sich die Wertevereilung, durch dieses Diagramm
 	visualisieren: 
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/systemic_illness_plot.png}
-		\captionof{figure}[Werteverteilung des Feature \url{Systemic_Illness}]{Werteverteilung des Feature \url{Systemic_Illness}}
+		\captionof{figure}[Werteverteilung des Feature \lstinline{Systemic_Illness}]{Werteverteilung des Feature \lstinline{Systemic_Illness}}
 		\label{fig:systemic_illness_plot}
 	\end{figure}
 
-	Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \url{Fever} oder \url{Swollen Lymph Nodes} leiden, zu einer
-	vielen höheren Wahrscheinlichkeit an Affenpocken erkrankt sind, als Patienten, die an keiner Symptomatik (\url{None}) oder \url{MuscleAchesandPain} leiden.
+	Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \lstinline{Fever} oder \lstinline{Swollen Lymph Nodes} leiden, zu einer
+	vielen höheren Wahrscheinlichkeit an Affenpocken erkrankt sind, als Patienten, die an keiner Symptomatik (\lstinline{None}) oder \lstinline{MuscleAchesandPain} leiden.
 
-	In Betracht auf Spalte \url{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \url{Negative} sind,
+	In Betracht auf Spalte \lstinline{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \lstinline{Negative} sind,
 	also nicht Affenpocken erkrankt sind. Diese Werteverteilung würde sich visuell folgendermaßen äußern:
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/monkey_pox_plot.png}
-		\captionof{figure}[Werteverteilung der Ergebnis-Spalte \url{MonkeyPox}]{Werteverteilung der Ergebnis-Spalte \url{MonkeyPox}}
+		\captionof{figure}[Werteverteilung der Ergebnis-Spalte \lstinline{MonkeyPox}]{Werteverteilung der Ergebnis-Spalte \lstinline{MonkeyPox}}
 		\label{fig:monkey_pox_plot}
 	\end{figure}
 
@@ -404,20 +412,76 @@ isbn=false		% Keine Ausbage der ISBN
 	negativen Bereich befinde. Es bestehen somit das keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
 
 	Ein weiterer Schritt in der Korrelationsananlyse, stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
-	Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \url{Systemic_Illness}, als eigene Spalten transponiert werden. 
-	Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \url{Systemic_Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Featurekombinationen 
+	Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \lstinline{Systemic_Illness}, als eigene Spalten transponiert werden. 
+	Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \lstinline{Systemic_Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Featurekombinationen 
 	getestet werden können. Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/tranp_df.png}
-		\captionof{figure}[Ausschnitt aus Datensatz mit transponiertem Feature \url{Systemic_Illness}]{Ausschnitt aus Datensatz mit transponiertem Feature \url{Systemic_Illness}}
+		\captionof{figure}[Ausschnitt aus Datensatz mit transponiertem Feature \lstinline{Systemic_Illness}]{Ausschnitt aus Datensatz mit transponiertem Feature \lstinline{Systemic_Illness}}
 		\label{fig:transp_feature}
 	\end{figure}
 
 	Die Analyse dieser Werte stützt die gesammelten Erkenntnisse aus der Heatmap. Die maximale Konfidenz ist 0.604167, der entsprechende Lift:
 	1.104538. Es ist demnach festzustellen, dass die Werte sich gegenseitig wenig bis garnicht beeinflussen beziehungsweise nicht zusammenhängen. 
 
+
+	\section{Genauigkeitsanalyse}
+		\label{ch:genauigkeit_analyse}
+
+	In diesem Kapitel werden verschiedene Genauigkeiten mit mehreren Modellen und Feature-Kombinationen ermittelt. Dabei wird versucht, die best mögliche Genauigkeit herauszufinden. 
+	Danach wird das ausgewählte Modell, grafisch auf Overfitting überprüft.  
+
+	\subsection{Wahl des Modells}
+		\label{ch:wahl_modell}
+
+	Zum Einen wird eine Untersuchung mit Bayes (\lstinline{GaussianNB()}) getätigt. Eine Zufallszahl stellt bei der Größe dieses Datensatzes eher eine geringfügige
+	Rolle, dennoch wird die 23 in diesem Modell als Zufallszahl verwendet. 67.984 ist dabei die berechnete Genauigkeit. Diese Genauigkeit ist zwar solide, 
+	dennoch lässt sie sich noch optimieren. 
+
+	In der Datei \lstinline{utils.py} wird eine Funktion (\lstinline{create_feature_accuracy_dict()}) entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modellen angewendet wird. Bei den drei Modellen handelt es sich um 
+	\lstinline{DecisionTreeClasifier()}, \lstinline{RandomForestclassifier()} und \lstinline{GaussianNB()}. Die Feature-Kombinationen (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
+	einer Dictionary gespeichert. Diese Dictionary lässt sich anhand der Genauigkeit absteigend sortieren. Somit kommt man zu dem Ergebnis, das für das Modell \lstinline{RandomForestclassifier} und 
+	den Features: \lstinline{Systemic_llness}, \lstinline{Rectao_Pain}, \lstinline{Sore_Throat}, \lstinline{Penile_Oedema}, \lstinline{HIV_Infection} und \lstinline{STI} eine Genauigkeit von 68.832 berechnet wird. Dabei stellt
+	68.842 die best-mögliche Genauigkeit im ganzen Modell dar. 
+
+	\subsection{Prüfung auf Overfitting}
+		\label{ch:pruefung_overfitting}
+
+	Aufbauend auf Kapitel \ref{ch:wahl_modell} ist es wichtig, festzustellen, ob beziehungsweise wann Overfitting in dem gewählten Modell auftritt. Overfitting beschreibt das Phänomen, dass
+	sich Daten zu sehr den Trainingsdaten anpassen, hierbei besteht die Gefahr, dass der Algorithmus den Datensatz auswendig, aber nicht die zugrundeliegenden Muster und Zusammenhänge erkennt.
+	
+	Um Overfitting in dem vorliegenden Datensatz zu erkennen, wird in der \lstinline{utils.py} eine weitere Funktion \lstinline{check_over_fitting}, in welcher
+	die Genauigkeit, anhand der berechneten Test- und Trainingsdaten und dem ausgewählten Modell (\lstinline{RandomForestclassifier}) aus 
+	Kapitel \ref{ch:wahl_modell} für die Baumtiefen 2 bis 21 berechnet wird. Die Test- und Trainingsdaten werden dabei im Verhältnis 50 - 50 geteilt. 
+	Dies wird grafisch in Form eines Plots ausgewertet: 
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/overfitting_plot.png}
+		\captionof{figure}[Genauigkeits-Verlauf der Test- und Trainingsdaten bei steigender Baumtiefe]{Genauigkeits-Verlauf der Test- und Trainingsdaten bei steigender Baumtiefe}
+		\label{fig:overfitting}
+	\end{figure}
+
+	Bei Betrachtung von Abbildung \ref{fig:overfitting} stellt man fest, dass ab einer Baumtiefe von 11, die Test- und Trainingsdaten parallel 
+	verlaufen, dies könnte ein Indiz für Overfitting sein. Demnach sollte die maximale Tiefe des Baumes in
+	\lstinline{RandomForestclassifier} mit der Variable \lstinline{max_depth} auf 11 festgelegt werden.  
+
+
+	\subsection{Darstellung als Entscheidungsbaum}
+		\label{ch:entscheidungsbaum}
+
+	Das Aufzeigen eines Entscheidungsbaums wird gewählt, um anhand von verschiedenen, visualisierten Antwortoptionen auf auf eine Affenpocken Erkrankung zu schließen.
+	Da es sich in dieser Studienarbeit, um einen sehr großen Datensatz handelt, ist es notwendig, den Entscheidungsbaum durch den Parameter \lstinline{min_sample_split} etwas zu kürzen. Dieser wird in der folgenden Abbildung auf 
+	0.2 gesetzt. 
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/decision_tree.png}
+		\captionof{figure}[Gekürzter Entscheidungsbaum]{Gekürzter Entscheidungsbaum}
+		\label{fig:decisiontree}
+	\end{figure}
 
 		\pagebreak
 		%-------------------------------------------------------------------------------------
@@ -428,7 +492,7 @@ isbn=false		% Keine Ausbage der ISBN
 		\phantomsection \label{Verzeichnisse}
 		\addcontentsline{toc}{section}{Verzeichnisse} %Ohne Nummer ins Inhaltsverzeichnis
 		\renewcommand{\thesection}{\Roman{verzeichnis}}
-		\section*{Verzeichnisse}
+		\section*{Verzeichnisse} 
 		% Literaturverzeichnis
 		\rhead{Verzeichnisse}
    		\phantomsection \label{Literaturverzeichnis}
