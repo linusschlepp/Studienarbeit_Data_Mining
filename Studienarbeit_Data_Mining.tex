@@ -310,21 +310,24 @@ isbn=false		% Keine Ausbage der ISBN
 	\section{Vorwort}
 		\label{ch:vorwort}
 
-	Ziel dieser Arbeit ist es, eine Analyse zu diesem Datensatz:  zu liefern. Dabei findet eine Analyse der 
-	Daten statt. Die Daten werden visuell in Form von Diagrammen aufbereitet und die grobe Werteverteilungen
+	Ziel dieser Arbeit ist es, eine Analyse zu diesem Datensatz: \linebreak \url{https://www.kaggle.com/datasets/muhammad4hmed/monkeypox-patients-dataset}  
+	zu liefern. Der Datensatz behandelt das Thema Affenpocken, dabei sind unterschiedliche Symptomatiken als Feautres gegeben, eine Spalte stellt dar, ob 
+	der Patient an positiv oder negativ auf Affenpocken getestet wurde.
+
+	Es findet eine Analyse des vorliegenden Datensatzes statt.  Die Daten werden visuell in Form von Diagrammen aufbereitet und die grobe Werteverteilungen
 	der Symptome beziehungsweise Features vorgestellt. Zudem findet eine Korrelationsanalyse statt, in welcher die 
 	Daten auf gegenseitige Zusammenhänge geprüft werden statt. Danach werden die Daten getestet sowie trainiert, die
 	verwendeten Modelle als auch entsprechenden Genauigkeiten dargestellt. Der letzte Schritt dieser Studienarbeit,
 	besteht daraus, dass ein Neuronales Netz auf die Daten angewendet wird und die entsprechenden Genauigkeiten
 	berechent werden. 
 
-	Klassfikation wird in dieser Studienarbeit als Anwendung verwendet. 
+	Binär-Klassfikation wird in dieser Studienarbeit als Anwendung verwendet. 
 	
 
 	\section{Analyse der Daten}
 		\label{ch:analyse_daten}
 
-	In diesem Kapitel findet eine Analyse der vorliegenden Daten statt. Zunächst findet eine oberflächliche Analyse des Datensatzes statt, in dieser
+	In diesem Kapitel wird der Datensatz untersucht. Zunächst findet eine oberflächliche Analyse des Datensatzes statt, in dieser
 	wird festgestellt, wie viele Featues der Datensatz enthält, wie viele Zeilen und Spalten er hat. Der nächste Schritt der Analyse stellt die Korrelationsanalyse
 	statt, dabei ist das Ziel, mögliche Zusammenhänge und Korrelationen in den Features zu erkennen. 
 
@@ -381,10 +384,10 @@ isbn=false		% Keine Ausbage der ISBN
 	\end{figure}
 
 	Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \lstinline{Fever} oder \lstinline{Swollen_Lymph_Nodes} leiden, zu einer
-	vielen höheren Wahrscheinlichkeit an Affenpocken erkrankt sind, als Patienten, die an keiner Symptomatik (\lstinline{None}) oder an \lstinline{Muscle_Aches_and_Pain} leiden.
+	vielen höheren Wahrscheinlichkeit an Affenpocken erkranken, als Patienten, die an keiner Symptomatik (\lstinline{None}) oder an \lstinline{Muscle_Aches_and_Pain} leiden.
 
 	In Betracht auf Spalte \lstinline{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \lstinline{Negative} sind,
-	also nicht Affenpocken erkrankt sind. Diese Werteverteilung würde sich visuell folgendermaßen äußern:
+	also nicht an Affenpocken erkrankt sind. Diese Werteverteilung würde sich visuell folgendermaßen äußern:
 
 	\begin{figure}[H]
 		\centering
@@ -409,10 +412,10 @@ isbn=false		% Keine Ausbage der ISBN
 	\end{figure}
 	
 	Beim Betracht von Abbildung \ref{fig:heatmap}, lässt sich also feststellen, das die berechneten Wahrscheinlichkeiten sich in einem Promille beziehungsweise 
-	negativen Bereich befinde. Es bestehen somit das keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
+	negativen Bereich befinden. Es bestehen somit keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
 
 	Ein weiterer Schritt in der Korrelationsananlyse, stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
-	Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \lstinline{Systemic_Illness}, als eigene Spalten transponiert werden. 
+	Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \lstinline{Systemic_Illness}, als eigene Spalten betrachtet werden. 
 	Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \lstinline{Systemic_Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Featurekombinationen 
 	getestet werden können. Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
 
@@ -436,9 +439,9 @@ isbn=false		% Keine Ausbage der ISBN
 	\subsection{Wahl des Modells}
 		\label{ch:wahl_modell}
 
-	Zum Einen wird eine Untersuchung mit Bayes (\lstinline{GaussianNB()}) getätigt. Eine Zufallszahl stellt bei der Größe dieses Datensatzes eher eine geringfügige
-	Rolle, dennoch wird die 23 in diesem Modell als Zufallszahl verwendet. 67.984 ist dabei die berechnete Genauigkeit. Diese Genauigkeit ist zwar solide, 
-	dennoch lässt sie sich noch optimieren. 
+	Zum Einen wird eine Untersuchung mit Bayes (\lstinline{GaussianNB()}) getätigt. Ein Zufallsstrom stellt bei der Größe dieses Datensatzes eher eine geringfügige
+	Rolle, deshalb wurde auf diesen Parameter verzichtet. 67.82 ist dabei die berechnete Genauigkeit. Der $R²$ Wert der Testdaten entspricht 0.68 und der $R³$ Wert der
+	Trainingsdaten ist ebenfalls 0.68.  Die Genauigkeit sowie die korrepsondierenden Approximationen sind zwar solide, lassen sich dennoch noch optimieren. 
 
 	In der Datei \lstinline{utils.py} wird eine Funktion (\lstinline{create_feature_accuracy_dict()}) entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modellen angewendet wird. Bei den drei Modellen handelt es sich um 
 	\lstinline{DecisionTreeClasifier()}, \lstinline{RandomForestclassifier()} und \lstinline{GaussianNB()}. Die Feature-Kombinationen (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
@@ -482,6 +485,10 @@ isbn=false		% Keine Ausbage der ISBN
 		\captionof{figure}[Gekürzter Entscheidungsbaum]{Gekürzter Entscheidungsbaum}
 		\label{fig:decisiontree}
 	\end{figure}
+
+	Bei Betrachtung von Abbildung \ref{fig:decisiontree} lässt sich nun fesstellen, dass die True- und False-Werte,
+	der Endknoten zu nahe beinander liegen. Demnach lässt sich anhand des Baumes schwer ein Muster ablesen beziehungsweise
+	nicht auf eine Affenpokcen Erkrankung schließen.  
 
 		\pagebreak
 		%-------------------------------------------------------------------------------------
