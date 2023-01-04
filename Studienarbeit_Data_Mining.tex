@@ -486,9 +486,41 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:decisiontree}
 	\end{figure}
 
-	Bei Betrachtung von Abbildung \ref{fig:decisiontree} lässt sich nun fesstellen, dass die True- und False-Werte,
-	der Endknoten zu nahe beinander liegen. Demnach lässt sich anhand des Baumes schwer ein Muster ablesen beziehungsweise
-	nicht auf eine Affenpokcen Erkrankung schließen.  
+	Es lässt sich also sagen, dass die True- und False-Werte, der Endknoten zu nahe beinander liegen, um klare Ansagen zu treffen. 
+	Demnach lässt sich anhand des Baumes schwer ein Muster ablesen beziehungsweise nicht auf eine Affenpocken Erkrankung schließen.  
+
+	\section{Erstellung eines Neurolen Netzes}
+		\label{ch:neuronlaes_netz}
+
+	Am Ende der Datenanalyse wird ein neuronales Netz erstellt. Der erste Schritt, besteht darin, die Daten für die Arbeit mit 
+	\lstinline{tensorflow} vorzubereiten. Hierbei werden die enthaltenen \lstinline{bool} und \lstinline{int} Werte in 
+	\lstinline{float} Werte umgewandelt, dies wird durch die Funktion \lstinline{prepare_for_tensor}
+	in der \lstinline{utils.py} Datei bewärkstelligt. 
+	
+	Der zweite Schritt, besteht in der Defintion des neuronalen Netzes, dieses ist folgendermaßen aufgebaut:
+
+	\lstinputlisting[label=lst:neuronal_network, captionpos=b,caption=Code des neuronalen Netzes]{Listing/neuronal_network.py}
+
+	Bei Betrachtung von Listing \ref{lst:neuronal_network} stellt man fest, dass für den Aufbau des Netzes insgesamt 4 
+	Schichten verwendet werden. Je eine \lstinline{input}- sowie \lstinline{output}-Schicht und 2 versteckte Schichten.
+	Die Anzahl der Neuronen innerhalb der versteckten Schichten ist auf 20 festgelegt, bei der \lstinline{input}-
+	Schicht liegt sie bei 14. Die verwendeten Aktivierungsfunktionen beschränken sich auf \lstinline{relu} und 
+	\lstinline{sigmoid}. In Bezug auf die Verlustfunktion, ist \lstinline{mse} die beste Wahl. 
+	
+	Es ergibt sich somit eine berechnete Genauigkeit von 0.64 und ein Verlust von 0.24. Graphisch sieht das 
+	folgendermaßen aus: 
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/neural_network.png}
+		\captionof{figure}[Verlust- und Genauigkeitskurven des neuronalen Netzes]{Verlust- und Genauigkeitskurven des neuronalen Netzes}
+		\label{fig:neural_network}
+	\end{figure}
+
+	Es ist ein Abfall im Verlust der Test- und Trainingsdaten zu verzeichnen. Der Loss der Trainingsdaten ist aber stärker als der der 
+	Testdaten, denn diese schwanken in den lezten eher, anstelle das sie fallen. Die ermittelte Genauigkeit der Trainings- und Testdaten 
+	schwankt zwar, ist aber insgesamt stabil. 
+	
 
 		\pagebreak
 		%-------------------------------------------------------------------------------------
