@@ -110,7 +110,7 @@ isbn=false		% Keine Ausbage der ISBN
 \renewcommand*{\labelnamepunct}{\addcolon\addspace}
 
 %Zusätzliche für Umbrüche für Kleinbuchstaben z.B. in URLs
-\appto\lstinlineBreaks{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j
+\appto\textitBreaks{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j
 	\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w
 	\do\x\do\y\do\z}
 
@@ -310,36 +310,36 @@ isbn=false		% Keine Ausbage der ISBN
 	\section{Vorwort}
 		\label{ch:vorwort}
 
-	Ziel dieser Arbeit ist es, eine Analyse zu diesem Datensatz: \linebreak \url{https://www.kaggle.com/datasets/muhammad4hmed/monkeypox-patients-dataset}  
-	zu liefern. Der Datensatz behandelt das Thema Affenpocken, dabei sind unterschiedliche Symptomatiken als Feautres gegeben, eine Spalte stellt dar, ob 
-	der Patient an positiv oder negativ auf Affenpocken getestet wurde.
+Ziel dieser Arbeit ist es, eine Analyse zu diesem Datensatz: \linebreak \url{https://www.kaggle.com/datasets/muhammad4hmed/monkeypox-patients-dataset}  
+zu liefern. Der Datensatz behandelt das Thema Affenpocken, dabei sind unterschiedliche Symptomatiken als Feautres gegeben, die Ergebnis-Spalte stellt dar, ob 
+der Patient an positiv oder negativ auf Affenpocken getestet wurde.
 
-	Es findet eine Analyse des vorliegenden Datensatzes statt.  Die Daten werden visuell in Form von Diagrammen aufbereitet und die grobe Werteverteilungen
-	der Symptome beziehungsweise Features vorgestellt. Zudem findet eine Korrelationsanalyse statt, in welcher die 
-	Daten auf gegenseitige Zusammenhänge geprüft werden statt. Danach werden die Daten getestet sowie trainiert, die
-	verwendeten Modelle als auch entsprechenden Genauigkeiten dargestellt. Der letzte Schritt dieser Studienarbeit,
-	besteht daraus, dass ein Neuronales Netz auf die Daten angewendet wird und die entsprechenden Genauigkeiten
-	berechent werden. 
+Es findet eine Analyse des vorliegenden Datensatzes statt.  Die Daten werden visuell in Form von Diagrammen aufbereitet und die grobe Werteverteilungen
+der Symptome beziehungsweise Features vorgestellt. Zudem findet eine Korrelationsanalyse statt, in welcher die 
+Daten auf gegenseitige Zusammenhänge geprüft werden statt. Danach werden die Daten getestet sowie trainiert, die
+verwendeten Modelle als auch entsprechenden Genauigkeiten dargestellt. Der letzte Schritt dieser Studienarbeit,
+besteht daraus, dass ein Neuronales Netz auf die Daten angewendet wird und die entsprechenden Genauigkeiten
+berechent werden. 
 
-	Binär-Klassfikation wird in dieser Studienarbeit als Anwendung verwendet. 
+Binär-Klassfikation wird in dieser Studienarbeit als Anwendung verwendet. 
 	
 
 	\section{Analyse der Daten}
 		\label{ch:analyse_daten}
 
-	In diesem Kapitel wird der Datensatz untersucht. Zunächst findet eine oberflächliche Analyse des Datensatzes statt, in dieser
-	wird festgestellt, wie viele Featues der Datensatz enthält, wie viele Zeilen und Spalten er hat. Der nächste Schritt der Analyse stellt die Korrelationsanalyse
-	statt, dabei ist das Ziel, mögliche Zusammenhänge und Korrelationen in den Features zu erkennen. 
+In diesem Kapitel wird der Datensatz untersucht. Zunächst findet eine oberflächliche Analyse des Datensatzes statt, in dieser
+wird festgestellt, wie viele Featues der Datensatz enthält, wie viele Zeilen und Spalten er hat. Der nächste Schritt der Analyse stellt die Korrelationsanalyse
+statt, dabei ist das Ziel, mögliche Zusammenhänge und Korrelationen in den Features zu erkennen. 
 
 	\subsection{Oberflächliche Datenanalyse}
 		\label{ch:oberflaechliche_analyse}
 
-	Der Datensatz weißt insgesamt 25000 Zeilen und 11 Spalten auf, davon sind 
-	neun Features, einer ist der Index und einer stellt die Ergebnis-Spalte dar. Damit Funktionen, wie \lstinline{pandas.DataFrame.replace} und 
-	\lstinline{pandas.DataFrame.query} problemlos verwendet werden können, war es notwendig, die Leerzeichen in den Spaltenbennenungen mit Unterstrichen zu ersetzen. 
-	So wurde beispielsweise \lstinline{Systmic Illness} zu \lstinline{Systemic_Illness}. \lstinline{Sexually Transmitted Infection} wird aufgrund der Länge, auf
-	\lstinline{STI} gekürzt. Die Spalte \lstinline{Patient_ID} wurde als Index verwendet. 
-	\lstinline{MonkeyPox} stellt die Ergebnis-Spalte dar. Das folgende Bild zeigt die Aufteilung der Spalten und die korrespondierenden Werte:
+Der Datensatz weißt insgesamt 25000 Zeilen und 11 Spalten auf, davon sind 
+neun Features, einer ist der Index und einer stellt die Ergebnis-Spalte dar. Damit Funktionen, wie \textit{pandas.DataFrame.replace} und 
+\textit{pandas.DataFrame.query} problemlos verwendet werden können, war es notwendig, die Leerzeichen in den Spaltenbennenungen mit Unterstrichen zu ersetzen. 
+So wurde beispielsweise \textit{Systemic\textunderscore Illness} zu \textit{Systemic\textunderscore Illness}. \textit{Sexually\textunderscore Transmitted\textunderscore Infection} wird aufgrund der Länge, auf
+\textit{STI} gekürzt. Die Spalte \textit{Patient\textunderscore ID} wurde als Index verwendet. 
+\textit{MonkeyPox} stellt die Ergebnis-Spalte dar. Das folgende Bild zeigt die Aufteilung der Spalten und die korrespondierenden Werte:
 
 	\begin{figure}[H]
 		\centering
@@ -348,12 +348,12 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:data_table}
 	\end{figure}
 
-	Bei den Werten der Features handelt es sich zu einem großen Teil, um \lstinline{bool} Werte. Die Spalte \lstinline{Systemic Illness}, stellt dabei eine Ausnahme dar. In dieser werden
-	vier \lstinline{str} Werte verwendet: \lstinline{None}, \lstinline{Fever}, \lstinline{Swollen Lymph Nodes} und \lstinline{Muscel Aches and Pain} in \lstinline{int} Werte umgewandelt. So wurde \lstinline{None} zu 1,
-	\lstinline{Fever} zu 2, \lstinline{Swollen Lymph Nodes} zu 3 und \lstinline{Muscle Aches and Pain} zu 4. Die Spalte \lstinline{MonkeyPox} enthält die Werte \lstinline{Positive} und \lstinline{Negative} und gibt
-	an, ob der entsprechende Patient an Affenpocken erkrankt ist.
+Bei den Werten der Features handelt es sich zu einem großen Teil, um \textit{bool} Werte. Die Spalte \textit{Systemic Illness}, stellt dabei eine Ausnahme dar. In dieser werden
+vier \textit{str} Werte verwendet: \textit{None}, \textit{Fever}, \textit{Swollen Lymph Nodes} und \textit{Muscel Aches and Pain} in \textit{int} Werte umgewandelt. So wurde \textit{None} zu 1,
+\textit{Fever} zu 2, \textit{Swollen Lymph Nodes} zu 3 und \textit{Muscle Aches and Pain} zu 4. Die Spalte \textit{MonkeyPox} enthält die Werte \textit{Positive} und \textit{Negative} und gibt
+an, ob der entsprechende Patient an Affenpocken erkrankt ist.
 
-	Die Werteverteilung der Features, welche \lstinline{bool} Werte enhalten, ist in dieser Tabelle aufgelistet: 
+Die Werteverteilung der Features, welche \textit{bool} Werte enhalten, ist in dieser Tabelle aufgelistet: 
 	
 	\begin{singlespace}
 	\begin{table}[H]
@@ -372,37 +372,37 @@ isbn=false		% Keine Ausbage der ISBN
 \end{singlespace}
 	
 
-	Es lässt sich feststellen, dass die Werteverteilung innerhalb der \lstinline{bool} Features sehr gleichmäßig ist. 
-	In Bezug auf das Feature (\lstinline{SystemicIllness}), welches ausschließlich \lstinline{str} enthält,  lässt sich die 
-	Werteverteilung, durch dieses Diagramm visualisieren: 
+Es lässt sich feststellen, dass die Werteverteilung innerhalb der \textit{bool} Features sehr gleichmäßig ist. 
+In Bezug auf das Feature (\textit{SystemicIllness}), welches ausschließlich \textit{str} enthält,  lässt sich die 
+Werteverteilung, durch dieses Diagramm visualisieren: 
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/systemic_illness_plot.png}
-		\captionof{figure}[Werteverteilung des Feature \lstinline{Systemic_Illness}]{Werteverteilung des Feature \lstinline{Systemic_Illness}}
+		\captionof{figure}[Werteverteilung des Feature \textit{Systemic\textunderscore Illness}]{Werteverteilung des Feature \textit{Systemic\textunderscore Illness}}
 		\label{fig:systemic_illness_plot}
 	\end{figure}
 
-	Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \lstinline{Fever} oder \lstinline{Swollen_Lymph_Nodes} leiden, zu einer
-	vielen höheren Wahrscheinlichkeit an Affenpocken erkranken, als Patienten, die an keiner Symptomatik (\lstinline{None}) oder an \lstinline{Muscle_Aches_and_Pain} leiden.
+Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \textit{Fever} oder \textit{Swollen\textunderscore Lymph\textunderscore Nodes} leiden, zu einer
+vielen höheren Wahrscheinlichkeit an Affenpocken erkranken, als Patienten, die an keiner Symptomatik (\textit{None}) oder an \textit{Muscle\textunderscore Aches\textunderscore and\textunderscore Pain} leiden.
 
-	In Betracht auf Spalte \lstinline{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \lstinline{Negative} sind,
-	also nicht an Affenpocken erkrankt sind. Diese Werteverteilung würde sich visuell folgendermaßen äußern:
+In Betracht auf Spalte \textit{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \textit{Negative} sind,
+also nicht an Affenpocken erkrankt sind. Diese Werteverteilung würde sich visuell folgendermaßen äußern:
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/monkey_pox_plot.png}
-		\captionof{figure}[Werteverteilung der Ergebnis-Spalte \lstinline{MonkeyPox}]{Werteverteilung der Ergebnis-Spalte \lstinline{MonkeyPox}}
+		\captionof{figure}[Werteverteilung der Ergebnis-Spalte \textit{MonkeyPox}]{Werteverteilung der Ergebnis-Spalte \textit{MonkeyPox}}
 		\label{fig:monkey_pox_plot}
 	\end{figure}
 
 	\subsection{Korrelationsanalyse}
 		\label{ch:korrleations_analyse}
 
-	Zur Prüfung, ob Zusammenhänge zwischen den einzelnen Feautres besteht, wird eine Heatmap verwendet. 
-	Eine Heatmap ist eine Zusammenstellung von Rechtecken. Sie kann genutzt werden, um Muster und Veränderungen im
-	Zeitverlauf zu betrachten. Die x-Achse wird oft mit einem Zeitmaß bezeichnet. Die y-Achse stellt eine Variable dar, 
-	welche die Kategorie in den Daten definiert. In Betracht auf den vorliegenden Datensatz ergibt sich die folgende Heatmap:
+Zur Prüfung, ob Zusammenhänge zwischen den einzelnen Feautres besteht, wird eine Heatmap verwendet. 
+Eine Heatmap ist eine Zusammenstellung von Rechtecken. Sie kann genutzt werden, um Muster und Veränderungen im
+Zeitverlauf zu betrachten. Die x-Achse wird oft mit einem Zeitmaß bezeichnet. Die y-Achse stellt eine Variable dar, 
+welche die Kategorie in den Daten definiert. In Betracht auf den vorliegenden Datensatz ergibt sich die folgende Heatmap:
 
 	\begin{figure}[H]
 		\centering
@@ -411,54 +411,54 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:heatmap}
 	\end{figure}
 	
-	Beim Betracht von Abbildung \ref{fig:heatmap}, lässt sich also feststellen, das die berechneten Wahrscheinlichkeiten sich in einem Promille beziehungsweise 
-	negativen Bereich befinden. Es bestehen somit keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
+Beim Betracht von Abbildung \ref{fig:heatmap}, lässt sich also feststellen, das die berechneten Wahrscheinlichkeiten sich in einem Promille beziehungsweise 
+negativen Bereich befinden. Es bestehen somit keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
 
-	Ein weiterer Schritt in der Korrelationsananlyse, stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
-	Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \lstinline{Systemic_Illness}, als eigene Spalten betrachtet werden. 
-	Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \lstinline{Systemic_Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Featurekombinationen 
-	getestet werden können. Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
+Ein weiterer Schritt in der Korrelationsananlyse, stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
+Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \textit{Systemic\textunderscore Illness}, als eigene Spalten betrachtet werden. 
+Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \textit{Systemic\textunderscore Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Featurekombinationen 
+getestet werden können. Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/tranp_df.png}
-		\captionof{figure}[Ausschnitt aus Datensatz mit transponiertem Feature \lstinline{Systemic_Illness}]{Ausschnitt aus Datensatz mit transponiertem Feature \lstinline{Systemic_Illness}}
+		\captionof{figure}[Ausschnitt aus Datensatz mit transponiertem Feature \textit{Systemic\textunderscore Illness}]{Ausschnitt aus Datensatz mit transponiertem Feature \textit{Systemic\textunderscore Illness}}
 		\label{fig:transp_feature}
 	\end{figure}
 
-	Die Analyse dieser Werte stützt die gesammelten Erkenntnisse aus der Heatmap. Die maximale Konfidenz ist 0.604167, der entsprechende Lift:
-	1.104538. Es ist demnach festzustellen, dass die Werte sich gegenseitig wenig bis garnicht beeinflussen beziehungsweise nicht zusammenhängen. 
+Die Analyse dieser Werte stützt die gesammelten Erkenntnisse aus der Heatmap. Die maximale Konfidenz ist 0.604167, der entsprechende Lift:
+1.104538. Es ist demnach festzustellen, dass die Werte sich gegenseitig wenig bis garnicht beeinflussen beziehungsweise nicht zusammenhängen. 
 
 
 	\section{Genauigkeitsanalyse}
 		\label{ch:genauigkeit_analyse}
 
-	In diesem Kapitel werden verschiedene Genauigkeiten mit mehreren Modellen und Feature-Kombinationen ermittelt. Dabei wird versucht, die best mögliche Genauigkeit herauszufinden. 
-	Danach wird das ausgewählte Modell, grafisch auf Overfitting überprüft.  
+In diesem Kapitel werden verschiedene Genauigkeiten mit mehreren Modellen und Feature-Kombinationen ermittelt. Dabei wird versucht, die best mögliche Genauigkeit herauszufinden. 
+Danach wird das ausgewählte Modell, grafisch auf Overfitting überprüft.  
 
 	\subsection{Wahl des Modells}
 		\label{ch:wahl_modell}
 
-	Zum Einen wird eine Untersuchung mit Bayes (\lstinline{GaussianNB()}) getätigt. Ein Zufallsstrom stellt bei der Größe dieses Datensatzes eher eine geringfügige
-	Rolle, deshalb wurde auf diesen Parameter verzichtet. 67.82 ist dabei die berechnete Genauigkeit. Der $R²$ Wert der Testdaten entspricht 0.68 und der $R³$ Wert der
-	Trainingsdaten ist ebenfalls 0.68.  Die Genauigkeit sowie die korrepsondierenden Approximationen sind zwar solide, lassen sich dennoch noch optimieren. 
+Zum Einen wird eine Untersuchung mit Bayes (\textit{GaussianNB()}) getätigt. Ein Zufallsstrom stellt bei der Größe dieses Datensatzes eher eine geringfügige
+Rolle, deshalb wurde auf diesen Parameter verzichtet. 67.82 ist dabei die berechnete Genauigkeit. Der $R²$ Wert der Testdaten entspricht 0.68 und der $R³$ Wert der
+Trainingsdaten ist ebenfalls 0.68.  Die Genauigkeit sowie die korrepsondierenden Approximationen sind zwar solide, lassen sich dennoch noch optimieren. 
 
-	In der Datei \lstinline{utils.py} wird eine Funktion (\lstinline{create_feature_accuracy_dict()}) entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modellen angewendet wird. Bei den drei Modellen handelt es sich um 
-	\lstinline{DecisionTreeClasifier()}, \lstinline{RandomForestclassifier()} und \lstinline{GaussianNB()}. Die Feature-Kombinationen (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
-	einer Dictionary gespeichert. Diese Dictionary lässt sich anhand der Genauigkeit absteigend sortieren. Somit kommt man zu dem Ergebnis, das für das Modell \lstinline{RandomForestclassifier} und 
-	den Features: \lstinline{Systemic_llness}, \lstinline{Rectao_Pain}, \lstinline{Sore_Throat}, \lstinline{Penile_Oedema}, \lstinline{HIV_Infection} und \lstinline{STI} eine Genauigkeit von 68.832 berechnet wird. Dabei stellt
-	68.842 die best-mögliche Genauigkeit im ganzen Modell dar. 
+In der Datei \textit{utils.py} wird eine Funktion (\textit{create\textunderscore feature\textunderscore accuracy\textunderscore dict()}) entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modellen angewendet wird. Bei den drei Modellen handelt es sich um 
+\textit{DecisionTreeClasifier()}, \textit{RandomForestClassifier()} und \textit{GaussianNB()}. Die Feature-Kombinationen (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
+einer Dictionary gespeichert. Diese Dictionary lässt sich anhand der Genauigkeit absteigend sortieren. Somit kommt man zu dem Ergebnis, das für das Modell \textit{RandomForestClassifier} und 
+den Features: \textit{Systemic\textunderscore  Illness}, \textit{Rectal\textunderscore Pain}, \textit{Sore\textunderscore Throat}, \textit{Penile\textunderscore Oedema}, \textit{HIV\textunderscore Infection} und \textit{STI} 
+eine Genauigkeit von 68.832 berechnet wird. Dabei stellt 68.842 die best-mögliche Genauigkeit im ganzen Modell dar. 
 
 	\subsection{Prüfung auf Overfitting}
 		\label{ch:pruefung_overfitting}
 
-	Aufbauend auf Kapitel \ref{ch:wahl_modell} ist es wichtig, festzustellen, ob beziehungsweise wann Overfitting in dem gewählten Modell auftritt. Overfitting beschreibt das Phänomen, dass
-	sich Daten zu sehr den Trainingsdaten anpassen, hierbei besteht die Gefahr, dass der Algorithmus den Datensatz auswendig, aber nicht die zugrundeliegenden Muster und Zusammenhänge erkennt.
-	
-	Um Overfitting in dem vorliegenden Datensatz zu erkennen, wird in der \lstinline{utils.py} eine weitere Funktion \lstinline{check_over_fitting}, in welcher
-	die Genauigkeit, anhand der berechneten Test- und Trainingsdaten und dem ausgewählten Modell (\lstinline{RandomForestclassifier}) aus 
-	Kapitel \ref{ch:wahl_modell} für die Baumtiefen 2 bis 21 berechnet wird. Die Test- und Trainingsdaten werden dabei im Verhältnis 50 - 50 geteilt. 
-	Dies wird grafisch in Form eines Plots ausgewertet: 
+Aufbauend auf Kapitel \ref{ch:wahl_modell} ist es wichtig, festzustellen, ob beziehungsweise wann Overfitting in dem gewählten Modell auftritt. Overfitting beschreibt das Phänomen, dass
+sich Daten zu sehr den Trainingsdaten anpassen, hierbei besteht die Gefahr, dass der Algorithmus den Datensatz auswendig, aber nicht die zugrundeliegenden Muster und Zusammenhänge erkennt.
+
+Um Overfitting in dem vorliegenden Datensatz zu erkennen, wird in der \textit{utils.py} eine weitere Funktion \textit{check\textunderscore over\textunderscore fitting}, in welcher
+die Genauigkeit, anhand der berechneten Test- und Trainingsdaten und dem ausgewählten Modell (\textit{RandomForestClassifier}) aus 
+Kapitel \ref{ch:wahl_modell} für die Baumtiefen 2 bis 21 berechnet wird. Die Test- und Trainingsdaten werden dabei im Verhältnis 50 - 50 geteilt. 
+Dies wird grafisch in Form eines Plots ausgewertet: 
 
 	\begin{figure}[H]
 		\centering
@@ -467,17 +467,17 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:overfitting}
 	\end{figure}
 
-	Bei Betrachtung von Abbildung \ref{fig:overfitting} stellt man fest, dass ab einer Baumtiefe von 11, die Test- und Trainingsdaten parallel 
-	verlaufen, dies könnte ein Indiz für Overfitting sein. Demnach sollte die maximale Tiefe des Baumes in
-	\lstinline{RandomForestclassifier} mit der Variable \lstinline{max_depth} auf 11 festgelegt werden.  
+Bei Betrachtung von Abbildung \ref{fig:overfitting} stellt man fest, dass ab einer Baumtiefe von 11, die Test- und Trainingsdaten parallel 
+verlaufen, dies könnte ein Indiz für Overfitting sein. Demnach sollte die maximale Tiefe des Baumes in
+\textit{RandomForestclassifier} mit der Variable \textit{max\textunderscore depth} auf 11 festgelegt werden.  
 
 
 	\subsection{Darstellung als Entscheidungsbaum}
 		\label{ch:entscheidungsbaum}
 
-	Das Aufzeigen eines Entscheidungsbaums wird gewählt, um anhand von verschiedenen, visualisierten Antwortoptionen auf auf eine Affenpocken Erkrankung zu schließen.
-	Da es sich in dieser Studienarbeit, um einen sehr großen Datensatz handelt, ist es notwendig, den Entscheidungsbaum durch den Parameter \lstinline{min_sample_split} etwas zu kürzen. Dieser wird in der folgenden Abbildung auf 
-	0.2 gesetzt. 
+Das Aufzeigen eines Entscheidungsbaums wird gewählt, um anhand von verschiedenen, visualisierten Antwortoptionen auf eine Affenpocken Erkrankung zu schließen.
+Da es sich in dieser Studienarbeit, um einen sehr großen Datensatz handelt, ist es notwendig, den Entscheidungsbaum durch den Parameter \textit{min\textunderscore sample\textunderscore split}
+etwas zu kürzen. Dieser wird in der folgenden Abbildung auf 0.2 gesetzt. 
 
 	\begin{figure}[H]
 		\centering
@@ -486,29 +486,31 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:decisiontree}
 	\end{figure}
 
-	Es lässt sich also sagen, dass die True- und False-Werte, der Endknoten zu nahe beinander liegen, um klare Ansagen zu treffen. 
-	Demnach lässt sich anhand des Baumes schwer ein Muster ablesen beziehungsweise nicht auf eine Affenpocken Erkrankung schließen.  
+Es lässt sich also sagen, dass die True- und False-Werte, der Endknoten zu nahe beinander liegen, um klare Ansagen zu treffen. 
+Demnach lässt sich anhand des Baumes schwer ein Muster ablesen beziehungsweise nicht auf eine Affenpocken Erkrankung schließen.  
 
-	\section{Erstellung eines Neurolen Netzes}
+	\section{Erstellung eines neuronalen Netzes}
 		\label{ch:neuronlaes_netz}
 
-	Am Ende der Datenanalyse wird ein neuronales Netz erstellt. Der erste Schritt, besteht darin, die Daten für die Arbeit mit 
-	\lstinline{tensorflow} vorzubereiten. Hierbei werden die enthaltenen \lstinline{bool} und \lstinline{int} Werte in 
-	\lstinline{float} Werte umgewandelt, dies wird durch die Funktion \lstinline{prepare_for_tensor}
-	in der \lstinline{utils.py} Datei bewärkstelligt. 
-	
-	Der zweite Schritt, besteht in der Defintion des neuronalen Netzes, dieses ist folgendermaßen aufgebaut:
+Am Ende der Datenanalyse wird ein neuronales Netz erstellt. Der erste Schritt, besteht darin, die Daten für die Arbeit mit 
+\textit{tensorflow} vorzubereiten. Hierbei werden die enthaltenen \textit{bool} und \textit{int} Werte in 
+\textit{float} Werte umgewandelt, dies wird durch die Funktion \textit{prepare\textunderscore for\textunderscore tensor}
+in der \textit{utils.py} Datei bewärkstelligt. Auf Funktionen der Bibliothek \textit{sklearn.preprocessing} wie 
+beispielsweise \textit{MinMaxScaler} konnte aufgrund des einheilichen sowie kleinen Wertebereichs verzichtet werden. 
 
-	\lstinputlisting[label=lst:neuronal_network, captionpos=b,caption=Code des neuronalen Netzes]{Listing/neuronal_network.py}
+Der zweite Schritt, besteht in der Defintion des neuronalen Netzes, dieses ist folgendermaßen aufgebaut:
 
-	Bei Betrachtung von Listing \ref{lst:neuronal_network} stellt man fest, dass für den Aufbau des Netzes insgesamt 4 
-	Schichten verwendet werden. Je eine \lstinline{input}- sowie \lstinline{output}-Schicht und 2 versteckte Schichten.
-	Die Anzahl der Neuronen innerhalb der versteckten Schichten ist auf 20 festgelegt, bei der \lstinline{input}-
-	Schicht liegt sie bei 14. Die verwendeten Aktivierungsfunktionen beschränken sich auf \lstinline{relu} und 
-	\lstinline{sigmoid}. In Bezug auf die Verlustfunktion, ist \lstinline{mse} die beste Wahl. 
-	
-	Es ergibt sich somit eine berechnete Genauigkeit von 0.64 und ein Verlust von 0.24. Graphisch sieht das 
-	folgendermaßen aus: 
+\lstinputlisting[label=lst:neuronal_network, captionpos=b,caption=Code des neuronalen Netzes]{Listing/neuronal_network.py}
+
+Bei Betrachtung von Listing \ref{lst:neuronal_network} stellt man fest, dass für den Aufbau des Netzes insgesamt 5
+Schichten verwendet werden. Je eine \textit{input}- sowie \textit{output}-Schicht und aufgrund der 
+größe des Datensatzes, 3 versteckte Schichten.
+Die Anzahl der Neuronen innerhalb der versteckten Schichten ist auf 15 festgelegt, bei der \textit{input}-
+Schicht liegt sie bei 9. Die verwendeten Aktivierungsfunktionen beschränken sich auf \textit{relu} und 
+\textit{sigmoid}. Die Verlustfunktion \textit{mse} hat sich im Laufe dieser Untersuchung, als die beste Wahl herausgestellt.
+
+Es ergibt sich somit eine berechnete Genauigkeit von 0.69 und ein Verlust von 0.20. Graphisch sieht das 
+folgendermaßen aus: 
 
 	\begin{figure}[H]
 		\centering
@@ -517,10 +519,22 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{fig:neural_network}
 	\end{figure}
 
-	Es ist ein Abfall im Verlust der Test- und Trainingsdaten zu verzeichnen. Der Loss der Trainingsdaten ist aber stärker als der der 
-	Testdaten, denn diese schwanken in den lezten eher, anstelle das sie fallen. Die ermittelte Genauigkeit der Trainings- und Testdaten 
-	schwankt zwar, ist aber insgesamt stabil. 
-	
+Es ist ein Abfall im Verlust der Test- und Trainingsdaten zu verzeichnen. Der Verlust der Trainingsdaten ist aber stärker als der der 
+Testdaten, denn diese schwanken in den lezten eher, anstelle das sie fallen. Die ermittelte Genauigkeit der Trainings- und Testdaten 
+schwankt zwar, ist aber insgesamt stabil. 
+
+
+	\section{Bewertung der Ergebnisse}
+		\label{ch:bewertungs_ergebnisse}
+
+Nach einer ausgiebigen Analyse des vorliegenden Datensatzes, kann man keine eindeutigen Schlüsse aus diesem Datensatz ziehen.
+Man kann weder anhand eines bestimmten Features auf eine Affenpocken Erkrankung schließen, noch besteht ein Zusammenhang/ Korrelationen
+zwischen den Features. Die Datenanalyse mithilfe verschiedener Modelle blieb ebenfall erfolglos, so konnte mithilfe verschiedener 
+Feature-Kombinationen und eines \textit{RandomForestClassifier} nur eine Genauigkeit von 0.7 ermittelt werde.
+
+Der Grund für diese eher erfolglose Datenanalyse liegt vorraussichtlich an der Homogenität der Daten. 
+
+
 
 		\pagebreak
 		%-------------------------------------------------------------------------------------
