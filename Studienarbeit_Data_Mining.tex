@@ -321,7 +321,7 @@ verwendeten Modelle mit den entsprechenden Genauigkeiten dargestellt. Der letzte
 besteht daraus, dass ein neuronales Netz auf die Daten angewendet wird und die resultierenden Genauigkeiten
 berechnet werden. 
 
-Binär-Klassifikation wird in dieser Studienarbeit als Anwendung verwendet. Diese Studienarbeit sowie der dazugehörige Python-Code, ist diesen
+Binär-Klassifikation wird in dieser Studienarbeit als Anwendung verwendet. Diese Studienarbeit sowie der dazugehörige Python-Code ist diesen
 GitHub-Repositories zu entnehmen: 
 
 	\begin{FHitemize}
@@ -354,7 +354,7 @@ So wird beispielsweise \textit{Systemic Illness} zu \textit{Systemic\textundersc
 		\label{fig:data_table}
 	\end{figure}
 
-Bei den Werten der Features handelt es sich zu einem großen Teil, um \textit{bool}-Werte. Die Spalte \textit{Systemic\textunderscore Illness} stellt dabei eine Ausnahme dar. In dieser werden
+Bei den Werten der Features handelt es sich zu einem großen Teil um \textit{bool}-Werte. Die Spalte \textit{Systemic\textunderscore Illness} stellt dabei eine Ausnahme dar. In dieser werden
 vier \textit{str}-Werte verwendet: \textit{None}, \textit{Fever}, \textit{Swollen Lymph Nodes} und \textit{Muscel Aches and Pain}. Es gilt diese Werte in \textit{int}-Werte umzuwandeln. So wird \textit{None} zu 1,
 \textit{Fever} zu 2, \textit{Swollen Lymph Nodes} zu 3 und \textit{Muscle Aches and Pain} zu 4. Die Spalte \textit{MonkeyPox} enthält die Werte \textit{Positive} und \textit{Negative} und gibt
 an, ob der entsprechende Patient an Affenpocken erkrankt ist.
@@ -372,27 +372,27 @@ Die Werteverteilung der Features, die \textit{bool}-Werte enthalten, ist in dies
 			\hline
 		\end{tabular}
 	\end{adjustbox}
-		\caption{Werteverteilung der verschiedenen Features} %Hinzufügen einer Tabellenbeschriftung
+		\caption{Werteverteilung der \textit{bool}-Features} %Hinzufügen einer Tabellenbeschriftung
 		\label{tab:werteverteilung_features}
 	\end{table}
 \end{singlespace}
 	
 
 Es lässt sich feststellen, dass die Werteverteilung innerhalb der \textit{bool}-Features sehr gleichmäßig ist. 
-In Bezug auf das Feature (\textit{SystemicIllness}), welches ausschließlich \textit{str}-Werte enthält, lässt sich die 
+In Bezug auf das Feature \textit{SystemicIllness}, welches ausschließlich \textit{str}-Werte enthält, lässt sich die 
 Werteverteilung, durch dieses Diagramm visualisieren: 
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/systemic_illness_plot.png}
-		\captionof{figure}[Werteverteilung des Feature \textit{Systemic\textunderscore Illness}]{Werteverteilung des Feature \textit{Systemic\textunderscore Illness}}
+		\captionof{figure}[Werteverteilung des Features \textit{Systemic\textunderscore Illness}]{Werteverteilung des Features \textit{Systemic\textunderscore Illness}}
 		\label{fig:systemic_illness_plot}
 	\end{figure}
 
-Bei Betrachtung von Abbildung \ref{fig:systemic_illness_plot} stellt man fest, dass Patienten, die an \textit{Fever} oder \textit{Swollen\textunderscore Lymph\textunderscore Nodes} leiden, zu einer
+Man stellt also fest, dass Patienten, die an \textit{Fever} oder \textit{Swollen\textunderscore Lymph\textunderscore Nodes} leiden, zu einer
 höheren Wahrscheinlichkeit an Affenpocken erkranken, als Patienten, die an keiner Symptomatik (\textit{None}) oder an \textit{Muscle Aches and Pain} leiden.
 
-In Betracht auf Spalte \textit{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \textit{Negative} sind.
+In Betracht auf die Spalte \textit{MonkeyPox} lässt sich sagen, dass 15909 Patienten an Affenpocken erkrankt sind, während 9091 \textit{Negative} sind.
 Diese Werteverteilung würde sich visuell folgendermaßen äußern:
 
 	\begin{figure}[H]
@@ -413,7 +413,7 @@ die die Kategorie in den Daten definiert. In Betracht auf den vorliegenden Daten
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{Bilder/heat_map.png}
-		\captionof{figure}[Die aus den Features resultierende Heatmap]{Die aus den Features resultierende Heatmap}
+		\captionof{figure}[Aus den Features resultierende Heatmap]{Aus den Features resultierende Heatmap}
 		\label{fig:heatmap}
 	\end{figure}
 	
@@ -537,14 +537,14 @@ schwankt zwar, ist aber insgesamt stabil.
 		\label{ch:bewertungs_ergebnisse}
 
 Nach einer ausgiebigen Analyse des vorliegenden Datensatzes kann man keine eindeutigen Schlüsse aus diesem Datensatz ziehen.
-Man kann weder anhand eines bestimmten Features auf eine Affenpocken Erkrankung schließen, noch besteht ein Zusammenhang/ Korrelationen
+Man kann weder anhand eines bestimmten Features auf eine Affenpocken-Erkrankung schließen, noch besteht ein Zusammenhang/ Korrelationen
 zwischen den Features. Die Datenanalyse mithilfe verschiedener Modelle blieb ebenfalls erfolglos, so konnte anhand verschiedener 
 Feature-Kombinationen und eines \textit{RandomForestClassifier} nur eine Genauigkeit von $\approx 0.69$ ermittelt werden. Die
 ermittelte Genauigkeit lässt vermuten, dass der vorliegende Datensatz für medizinische Untersuchungen zu gering ist. 
 
-Der Grund für diese eher erfolglose Datenanalyse liegt vorraussichtlich an der Homogenität der Daten. 
+Der Grund für diese eher erfolglose Datenanalyse liegt vermutlich an der Homogenität der Daten. 
 In Kapitel \ref{ch:genauigkeit_analyse} wurde bereits bewiesen, dass kein Feature ein wirkliches Indiz für eine 
-Affenpocken-Erkrankung darstellt. Es wäre sinnvoller gewesen, den Features int-Wert beispielsweise in einem Intervall [0, 5], 
+Affenpocken-Erkrankung darstellt. Es wäre sinnvoller gewesen, den Features \textit{int}-Werte beispielsweise in einem Intervall [0, 5] 
 zu geben. Dabei beschreiben die Werte des Intervalls die Heftigkeit der jeweiligen Symptomatik.
 
 
