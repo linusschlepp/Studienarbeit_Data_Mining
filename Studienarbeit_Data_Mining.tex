@@ -311,22 +311,24 @@ isbn=false		% Keine Ausbage der ISBN
 		\label{ch:vorwort}
 
 Ziel dieser Arbeit ist es, eine Analyse zu diesem Datensatz: \linebreak \url{https://www.kaggle.com/datasets/muhammad4hmed/monkeypox-patients-dataset}  
-zu liefern. Der Datensatz behandelt das Thema Affenpocken. Dabei sind unterschiedliche Symptomatiken als Features gegeben. Die Ergebnis-Spalte stellt dar, ob 
+zu liefern. 
+
+Der Datensatz behandelt das Thema Affenpocken. Dabei sind unterschiedliche Symptomatiken als Features gegeben. Die Ergebnis-Spalte stellt dar, ob 
 der Patient positiv oder negativ auf Affenpocken getestet wurde.
 
 Es findet eine Analyse des vorliegenden Datensatzes statt.  Die Daten werden visuell in Form von Diagrammen aufbereitet und die grobe Werteverteilungen
 der Symptome beziehungsweise Features vorgestellt. Zudem findet eine Korrelationsanalyse, in welcher die 
 Daten auf gegenseitige Zusammenhänge geprüft werden, statt. Danach werden die Daten getestet sowie trainiert und die
-verwendeten Modelle mit den entsprechenden Genauigkeiten dargestellt. Der letzte Schritt dieser Studienarbeit
+verwendeten Modelle mit den entsprechenden Genauigkeiten dargestellt. Der letzte Schritt der Datenanalyse
 besteht daraus, dass ein neuronales Netz auf die Daten angewendet wird und die resultierenden Genauigkeiten
-berechnet werden. 
+berechnet werden. Am Schluss werden die gewonnenen Ergebenisse dieser Studienarbeit aufbereitet. 
 
 Binär-Klassifikation wird in dieser Studienarbeit als Anwendung verwendet. Diese Studienarbeit sowie der dazugehörige Python-Code ist diesen
 GitHub-Repositories zu entnehmen: 
 
 	\begin{FHitemize}
 		\item Studienarbeit: \url{https://github.com/linusschlepp/Studienarbeit_Data_Mining}
-		\item Ausarbeitung in Python: \url{https://github.com/linusschlepp/Studienarbeit}
+		\item Python-Code: \url{https://github.com/linusschlepp/Studienarbeit}
 	\end{FHitemize}
 	
 
@@ -445,17 +447,20 @@ Danach wird das ausgewählte Modell grafisch auf Overfitting überprüft.
 	\subsection{Wahl des Modells}
 		\label{ch:wahl_modell}
 
-Zum Einen wird eine Untersuchung mit Bayes (\textit{GaussianNB()}) getätigt. Ein Zufallsstrom spielt bei der Größe des Datensatzes eher eine geringfügige
-Rolle. Aus diesem Grund wird im Laufe der Untersuchung auf diesen Parameter verzichtet. 67.82 ist dabei die berechnete Genauigkeit. Der $R^2$ Wert der Testdaten entspricht 0.68 und der $R^2$ Wert der
-Trainingsdaten ist ebenfalls 0.68. Die ermittelte Genauigkeit in diesem Modell stellt sich als wenig zufriedenstellen heraus. Es ergibt sich somit die Frage,
+Zum Einen wird eine Untersuchung mit Bayes (\textit{GaussianNB()}) getätigt. Im Laufe der Untersuchung wird der Zufallsstrom nicht aktiv vorgegeben, diese also vom Moll selber gewählt.
+67.82 ist dabei die berechnete Genauigkeit. Die ermittelte Genauigkeit in diesem Modell stellt sich als wenig zufriedenstellen heraus. Es ergibt sich somit die Frage,
 ob sich diese optimieren lässt.
 
 In der Datei \textit{utils.py} wird eine Funktion \textit{create\textunderscore feature\textunderscore accuracy\textunderscore dict()} entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modellen angewendet wird. 
 Bei den drei Modellen handelt es sich um  \textit{DecisionTreeClasifier()}, \textit{RandomForestClassifier()} und \textit{GaussianNB()}. Die Feature-Kombinationen, das verwendete Modell (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
 einer Dictionary gespeichert. Diese Dictionary lässt sich anhand der Genauigkeit absteigend sortieren. Man kommt zu dem Ergebnis, dass für das Modell \textit{RandomForestClassifier} und 
-den Features: \textit{Systemic\textunderscore  Illness}, \textit{Rectal\textunderscore Pain}, \textit{Sore\textunderscore Throat}, \textit{Penile\textunderscore Oedema}, \textit{HIV\textunderscore Infection} und \textit{STI} 
-eine Genauigkeit von 68.832 berechnet wird. 
+den Features: \textit{Systemic\textunderscore  Illness}, \textit{Rectal\textunderscore Pain}, \textit{Sore\textunderscore Throat}, \textit{Solitary\textunderscore Lesion}, \textit{HIV\textunderscore Infection} und \textit{STI} 
+eine Genauigkeit von 69.71 berechnet wird.  
 
+	\lstinputlisting[label=lst:plot, captionpos=b,caption=Verwendetes Modell Feature-Kombination und korrespondierende Genauigkeitst]{Listing/dict.txt}
+
+
+In Bezug auf Listing \ref{lst:plot} stellt man fest, dass die oben gennante Feature-Kombination von den perfomantesten Modellen verwendet wird.
 Diese Untersuchung ermöglicht es, die Genauigkeit um 1\% zu optimieren und \textit{RandomForestClassifier} als das beste Modell für diesen Datensatz zu erkennen.  
 
 	\subsection{Prüfung auf Overfitting}
@@ -477,8 +482,10 @@ Das Ergebnis dieser Untersuchung wird grafisch in Form eines Plots ausgewertet:
 	\end{figure}
 
 Bei Betrachtung von Abbildung \ref{fig:overfitting} stellt man fest, dass ab einer Baumtiefe von 11, die Test- und Trainingsdaten parallel 
-verlaufen. Dieses Verhalten ist zwar kein zwangsläufiges Indiz für Overfitting, könnte aber darauf hinweisen, dass der Baum zu tief ist.
-Demnach sollte die maximale Tiefe des Baumes in \textit{RandomForestClassifier} mit Hilfe der Variable \textit{max\textunderscore depth} auf 11 festgelegt werden.  
+verlaufen. Dieses Verhalten ist zwar kein Indiz für Overfitting. Es ist ein eher ein Zeichen dafür, dass sich die Test- und Trainingsdaten aber einer
+Baumtiefe von 11 stabilisieren. Demnach sollte die maximale Tiefe des Baumes in \textit{RandomForestClassifier} mit Hilfe der Variable \textit{max\textunderscore depth} 
+auf 11 festgelegt werden.  
+ 
 
 
 	\subsection{Darstellung als Entscheidungsbaum}
@@ -509,14 +516,14 @@ beispielsweise \textit{MinMaxScaler} konnte aufgrund des einheitlichen sowie kle
 
 Der zweite Schritt, besteht in der Definition des neuronalen Netzes, dieses ist folgendermaßen aufgebaut:
 
-\lstinputlisting[label=lst:neuronal_network, captionpos=b,caption=Code des neuronalen Netzes]{Listing/neuronal_network.py}
+	\lstinputlisting[label=lst:neuronal_network, captionpos=b,caption=Code des neuronalen Netzes]{Listing/neuronal_network.py}
 
 In Listing \ref{lst:neuronal_network} werden für den Aufbau des Netzes insgesamt 5
 Schichten verwendet. Je eine \textit{input}- sowie \textit{output}-Schicht. Aufgrund der 
 Größe des Datensatzes werden 3 versteckte Schichten verwendet.
 Die Anzahl der Neuronen innerhalb der versteckten Schichten ist auf 15 festgelegt, bei der \textit{input}-
 Schicht liegt sie bei 9. Die verwendeten Aktivierungsfunktionen beschränken sich auf \textit{relu} und 
-\textit{sigmoid}. Die Verlustfunktion \textit{mse} hat sich im Laufe dieser Untersuchung, als die beste Wahl herausgestellt.
+\textit{sigmoid}. Die Verlustfunktion \textit{mse} hat sich im Laufe dieser Untersuchung als die beste Wahl herausgestellt.
 
 Es ergibt sich somit eine berechnete Genauigkeit von 0.69 und ein Verlust von 0.20. Graphisch sieht der Epochenverlauf der Verlust- und 
 Genauigkeitswerte folgendermaßen aus: 
@@ -529,18 +536,20 @@ Genauigkeitswerte folgendermaßen aus:
 	\end{figure}
 
 Es ist ein Abfall im Verlust der Test- und Trainingsdaten zu verzeichnen. Der Verlust der Trainingsdaten ist jedoch stärker. 
-In Bezug auf die Testdaten ist anstelle eines Abfalls, eher eine Schwankung erkennbar. Die ermittelte Genauigkeit der Trainings- und Testdaten 
-schwankt zwar, ist aber insgesamt stabil. 
+In Bezug auf die Testdaten ist anstelle eines Abfalls, eher eine Schwankung erkennbar. Der ermittelte Genauigkeitsverlauf
+der Trainings- und Testdaten schwankt zwar, ist aber insgesamt stabil. Somit ist in Betracht der Verlust- und Genauigkeitskurven
+kein Overfitting zu verzeichnen. 
 
 
 	\section{Bewertung der Ergebnisse}
 		\label{ch:bewertungs_ergebnisse}
 
-Nach einer ausgiebigen Analyse des vorliegenden Datensatzes kann man keine eindeutigen Schlüsse aus diesem Datensatz ziehen.
+Nach einer ausgiebigen Analyse des vorliegenden Datensatzes können keine eindeutigen Schlüsse aus diesem Datensatz gezogen werden.
 Man kann weder anhand eines bestimmten Features auf eine Affenpocken-Erkrankung schließen, noch besteht ein Zusammenhang/ Korrelationen
 zwischen den Features. Die Datenanalyse mithilfe verschiedener Modelle blieb ebenfalls erfolglos, so konnte anhand verschiedener 
-Feature-Kombinationen und eines \textit{RandomForestClassifier} nur eine Genauigkeit von $\approx 0.69$ ermittelt werden. Die
-ermittelte Genauigkeit lässt vermuten, dass der vorliegende Datensatz für medizinische Untersuchungen zu gering ist. 
+Feature-Kombinationen und dem Modell \textit{RandomForestClassifier} nur eine Genauigkeit von $\approx 0.70$ ermittelt werden. 
+Die ermittelte Genauigkeit lässt vermuten, dass der vorliegende Datensatz für medizinische Untersuchungen zu gering ist. 
+Overfitting konnte im verwendeten Modell \textit{RandomForestClassifier()} als auch im \textit{Neuronalen Netz} nicht nachgewiesen werden. 
 
 Der Grund für diese eher erfolglose Datenanalyse liegt vermutlich an der Homogenität der Daten. 
 In Kapitel \ref{ch:genauigkeit_analyse} wurde bereits bewiesen, dass kein Feature ein wirkliches Indiz für eine 
@@ -568,6 +577,10 @@ zu geben. Dabei beschreiben die Werte des Intervalls die Heftigkeit der jeweilig
 		\stepcounter{verzeichnis}
 		\listoftables
 		\pagebreak
+
+		\stepcounter{verzeichnis}
+        \lstlistoflistings
+        \pagebreak
 
 \vspace{-3em}
 
