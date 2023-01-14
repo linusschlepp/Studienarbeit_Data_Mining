@@ -1,0 +1,15 @@
+[    (   (   'RandomForestClassifier()',
+            "['Systemic_Illness', 'Rectal_Pain', 'Penile_Oedema', "
+            "'Solitary_Lesion', 'HIV_Infection', 'STI']"),
+        69.71199999999999),
+(   (   "DecisionTreeClassifier(criterion='entropy', min_samples_split=5)",
+            "['Systemic_Illness', 'Rectal_Pain', 'Penile_Oedema', "
+            "'Solitary_Lesion', 'HIV_Infection', 'STI']"),
+        69.71199999999999),
+    (   (   "DecisionTreeClassifier(criterion='entropy', min_samples_split=5)",
+            "['Systemic_Illness', 'Rectal_Pain', 'Solitary_Lesion', "
+            "'HIV_Infection', 'STI']"),
+        69.568),
+    (   (   'RandomForestClassifier()',
+            "['Systemic_Illness', 'Rectal_Pain', 'Solitary_Lesion', "
+            "'HIV_Infection', 'STI']"),

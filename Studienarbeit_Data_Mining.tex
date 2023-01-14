@@ -321,7 +321,7 @@ der Symptome beziehungsweise Features vorgestellt. Zudem findet eine Korrelation
 Daten auf gegenseitige Zusammenhänge geprüft werden, statt. Danach werden die Daten getestet sowie trainiert und die
 verwendeten Modelle mit den entsprechenden Genauigkeiten dargestellt. Der letzte Schritt der Datenanalyse
 besteht daraus, dass ein neuronales Netz auf die Daten angewendet wird und die resultierenden Genauigkeiten
-berechnet werden. Am Schluss werden die gewonnenen Ergebenisse dieser Studienarbeit aufbereitet. 
+berechnet werden. Am Schluss werden die gewonnenen Ergebnisse dieser Studienarbeit aufbereitet. 
 
 Binär-Klassifikation wird in dieser Studienarbeit als Anwendung verwendet. Diese Studienarbeit sowie der dazugehörige Python-Code ist diesen
 GitHub-Repositories zu entnehmen: 
@@ -336,14 +336,14 @@ GitHub-Repositories zu entnehmen:
 		\label{ch:analyse_daten}
 
 In diesem Kapitel wird der Datensatz untersucht. Zunächst findet eine oberflächliche Analyse des Datensatzes statt, in dieser
-wird festgestellt, wie viele Features beziehungsweise Zeilen und Spalten der Datensatz enthält. Der nächste Schritt der Analyse, stellt die Korrelationsanalyse
+wird festgestellt, wie viele Features beziehungsweise Zeilen und Spalten der Datensatz enthält. Der nächste Schritt der Analyse stellt die Korrelationsanalyse
 dar. Dabei ist das Ziel, mögliche Zusammenhänge und Korrelationen zwischen den Features zu erkennen. 
 
 	\subsection{Oberflächliche Datenanalyse}
 		\label{ch:oberflaechliche_analyse}
 
 Der Datensatz weißt insgesamt 25000 Zeilen und 11 Spalten auf. Davon sind 
-neun Features. Einer ist der Index und eine stellt die Ergebnis-Spalte dar. Damit Funktionen, wie \textit{pandas.DataFrame.replace} und 
+neun Features. Eine Spalte ist der Index und eine stellt die Ergebnis-Spalte dar. Damit Funktionen, wie \textit{pandas.DataFrame.replace} und 
 \textit{pandas.DataFrame.query} problemlos verwendet werden können, ist es notwendig, die Leerzeichen in den Spaltenbenennungen mit Unterstrichen zu ersetzen. 
 So wird beispielsweise \textit{Systemic Illness} zu \textit{Systemic\textunderscore Illness}. \textit{Sexually\textunderscore Transmitted\textunderscore Infection} wird aufgrund der Länge, auf
 \textit{STI} gekürzt. Die Spalte \textit{Patient\textunderscore ID} wird als Index verwendet. 
@@ -357,7 +357,7 @@ So wird beispielsweise \textit{Systemic Illness} zu \textit{Systemic\textundersc
 	\end{figure}
 
 Bei den Werten der Features handelt es sich zu einem großen Teil um \textit{bool}-Werte. Die Spalte \textit{Systemic\textunderscore Illness} stellt dabei eine Ausnahme dar. In dieser werden
-vier \textit{str}-Werte verwendet: \textit{None}, \textit{Fever}, \textit{Swollen Lymph Nodes} und \textit{Muscel Aches and Pain}. Es gilt diese Werte in \textit{int}-Werte umzuwandeln. So wird \textit{None} zu 1,
+vier \textit{str}-Werte verwendet: \textit{None}, \textit{Fever}, \textit{Swollen Lymph Nodes} und \textit{Muscle Aches and Pain}. Es gilt diese Werte auf \textit{int}-Werte zu mappen. So wird \textit{None} zu 1,
 \textit{Fever} zu 2, \textit{Swollen Lymph Nodes} zu 3 und \textit{Muscle Aches and Pain} zu 4. Die Spalte \textit{MonkeyPox} enthält die Werte \textit{Positive} und \textit{Negative} und gibt
 an, ob der entsprechende Patient an Affenpocken erkrankt ist.
 
@@ -381,7 +381,20 @@ Die Werteverteilung der Features, die \textit{bool}-Werte enthalten, ist in dies
 	
 
 Es lässt sich feststellen, dass die Werteverteilung innerhalb der \textit{bool}-Features sehr gleichmäßig ist. 
-In Bezug auf das Feature \textit{SystemicIllness}, welches ausschließlich \textit{str}-Werte enthält, lässt sich die 
+Zusätzlich wäre es interessant zu wissen, wie die Verteilung von \textit{MonkeyPox} aussieht, wenn die Werte der \textit{bool}-Features
+\textit{True} sind. Man könnte damit erkennen, ob das Auftreten eines Symptoms eine beziehungsweise keine Affenpocken-Erkrankung zur Folge hat.  
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{Bilder/feature_plot_true.png}
+		\captionof{figure}[Verteilung von \textit{MonkeyPox} wenn bool-Features \textit{True} sind]{Verteilung von \textit{MonkeyPox} wenn bool-Features \textit{True} sind}
+		\label{fig:feature_true_plot}
+	\end{figure}
+
+Anhand von Abbildung \ref{fig:feature_true_plot} kann man also erkennen, dass die Features analog zu Tabelle \ref{tab:werteverteilung_features}	sehr gleichmäßig ist.
+Folglich lässt kein Symptom auf eine Affenpocken-Erkrankung schließen. 
+
+In Bezug auf das Feature \textit{Systemic\textunderscore Illness}, welches ausschließlich \textit{str}-Werte enthält, lässt sich die 
 Werteverteilung, durch dieses Diagramm visualisieren: 
 
 	\begin{figure}[H]
@@ -419,13 +432,14 @@ die die Kategorie in den Daten definiert. In Betracht auf den vorliegenden Daten
 		\label{fig:heatmap}
 	\end{figure}
 	
-Anhand von Abbildung \ref{fig:heatmap} lässt sich also feststellen, dass die berechneten Wahrscheinlichkeiten sich in einem sehr kleinem beziehungsweise 
+Anhand von Abbildung \ref{fig:heatmap} lässt sich also feststellen, dass sich die berechneten Wahrscheinlichkeiten in einem sehr kleinem beziehungsweise 
 negativen Bereich befinden. Es bestehen somit keine Zusammenhänge und Korrelationen zwischen den verschiedenen Features. 
 
-Ein weiterer Schritt in der Korrelationsanalyse stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
-Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \textit{Systemic\textunderscore Illness}, als eigene Spalten betrachtet werden. 
-Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \textit{Systemic\textunderscore Illness} als eigene Symptome (Features) verstanden werden sollen und somit mehrere Feature-Kombinationen 
-getestet werden können. Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
+Ein weiterer Schritt der Korrelationsanalyse stellt die Betrachtung der Lift und Konfidenz Werte dar. Dabei ist es notwendig, den 
+Datensatz in so weit zu bearbeiten, dass die verschiedenen Werte von \textit{Systemic\textunderscore Illness} als eigene Spalten betrachtet werden. 
+Dies ist gefordert, da die verschiedenen Krankheisbilder der Spalte \textit{Systemic\textunderscore Illness} als eigene Symptome (Features) verstanden werden sollen. 
+Somit können mehr Feature-Kombinationen getestet werden und es gelingt, sich einen größeren Überblick über die vorhandenen Assoziationen im Datensatz zu schaffen. 
+Demnach sieht der überarbeitete Datensatz folgendermaßen aus: 
 
 	\begin{figure}[H]
 		\centering
@@ -434,7 +448,7 @@ getestet werden können. Demnach sieht der überarbeitete Datensatz folgenderma�
 		\label{fig:transp_feature}
 	\end{figure}
 
-Die Analyse dieser Werte stützt die gesammelten Erkenntnisse aus der Heatmap. Die maximale Konfidenz ist 0.604167, der entsprechende Lift
+Die Analyse dieser Werte stützt die gesammelten Erkenntnisse der Heatmap. Die maximale Konfidenz ist 0.604167, der entsprechende Lift
 1.104538. Dementsprechend ist festzustellen, dass die Werte sich gegenseitig wenig bis gar nicht beeinflussen beziehungsweise nicht zusammenhängen. 
 
 
@@ -447,21 +461,25 @@ Danach wird das ausgewählte Modell grafisch auf Overfitting überprüft.
 	\subsection{Wahl des Modells}
 		\label{ch:wahl_modell}
 
-Zum Einen wird eine Untersuchung mit Bayes (\textit{GaussianNB()}) getätigt. Im Laufe der Untersuchung wird der Zufallsstrom nicht aktiv vorgegeben, diese also vom Moll selber gewählt.
-67.82 ist dabei die berechnete Genauigkeit. Die ermittelte Genauigkeit in diesem Modell stellt sich als wenig zufriedenstellen heraus. Es ergibt sich somit die Frage,
+Zum Einen wird eine Untersuchung mit dem Modell \textit{GaussianNB()} getätigt. Im Laufe der Untersuchung wird bei der Ermittlung der Trainings- und Testdaten der Zufallsstrom 
+nicht aktiv über den Parameter \textit{random\textunderscore state} vorgegeben. Dieser wird also von der Funktion \textit{train\textunderscore test\textunderscore split} selbst gewählt.
+68.53 ist bei \textit{GaussianNB} die berechnete Genauigkeit. Diese Genauigkeit stellt sich als wenig zufriedenstellen heraus. Es ergibt sich somit die Frage,
 ob sich diese optimieren lässt.
 
-In der Datei \textit{utils.py} wird eine Funktion \textit{create\textunderscore feature\textunderscore accuracy\textunderscore dict()} entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modellen angewendet wird. 
-Bei den drei Modellen handelt es sich um  \textit{DecisionTreeClasifier()}, \textit{RandomForestClassifier()} und \textit{GaussianNB()}. Die Feature-Kombinationen, das verwendete Modell (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
-einer Dictionary gespeichert. Diese Dictionary lässt sich anhand der Genauigkeit absteigend sortieren. Man kommt zu dem Ergebnis, dass für das Modell \textit{RandomForestClassifier} und 
+In der Datei \textit{utils.py} wird eine Funktion \textit{create\textunderscore feature\textunderscore accuracy\textunderscore dict()} entwickelt, bei welcher jede mögliche Feature-Kombination für drei Modelle angewendet wird. 
+Bei den drei Modellen handelt es sich um  \textit{DecisionTreeClasifier()}, \textit{RandomForestClassifier()} und \textit{GaussianNB()}. 
+
+Die Feature-Kombinationen, das verwendete Modell (Key) und die korrespondierenden Genauigkeiten (Value) werden in 
+einer Dictionary gespeichert. Diese Dictionary lässt sich anhand der Genauigkeit absteigend sortieren. Man kommt zu dem Ergebnis, dass für das Modell \textit{RandomForestClassifier()} und 
 den Features: \textit{Systemic\textunderscore  Illness}, \textit{Rectal\textunderscore Pain}, \textit{Sore\textunderscore Throat}, \textit{Solitary\textunderscore Lesion}, \textit{HIV\textunderscore Infection} und \textit{STI} 
 eine Genauigkeit von 69.71 berechnet wird.  
 
-	\lstinputlisting[label=lst:plot, captionpos=b,caption=Verwendetes Modell Feature-Kombination und korrespondierende Genauigkeitst]{Listing/dict.txt}
+	\lstinputlisting[label=lst:dict, captionpos=b,caption={Verwendetes Modell, Feature-Kombination und die korrespondierende Genauigkeit}]{Listing/dict.txt}
 
 
-In Bezug auf Listing \ref{lst:plot} stellt man fest, dass die oben gennante Feature-Kombination von den perfomantesten Modellen verwendet wird.
-Diese Untersuchung ermöglicht es, die Genauigkeit um 1\% zu optimieren und \textit{RandomForestClassifier} als das beste Modell für diesen Datensatz zu erkennen.  
+Man stellt fest, dass die oben gennante Feature-Kombination von jedem Modell in Listing \ref{lst:dict} verwendet wird. Somit kann man annehmen, dass diese
+Feature-Kombination die Beste für den vorliegenden Datensatz ist. Diese Untersuchung ermöglicht es, die Genauigkeit um 1\% zu optimieren und \textit{RandomForestClassifier()} als das beste Modell für
+diesen Datensatz zu erkennen.  
 
 	\subsection{Prüfung auf Overfitting}
 		\label{ch:pruefung_overfitting}
@@ -470,7 +488,7 @@ Aufbauend auf Kapitel \ref{ch:wahl_modell} ist es wichtig festzustellen, ob bezi
 sich Daten zu sehr den Trainingsdaten anpassen. Hierbei besteht die Gefahr, dass der Algorithmus den Datensatz auswendig, aber nicht die zugrundeliegenden Muster und Zusammenhänge erkennt.
 
 Um Overfitting in dem vorliegenden Datensatz zu erkennen wird in der \textit{utils.py} eine weitere Funktion \textit{check\textunderscore over\textunderscore fitting} hinzugefügt. In welcher
-die Genauigkeit anhand der berechneten Test- und Trainingsdaten und dem ausgewählten Modell (\textit{RandomForestClassifier}) aus 
+die Genauigkeit anhand der berechneten Test- und Trainingsdaten und dem ausgewählten Modell (\textit{RandomForestClassifier()}) aus 
 Kapitel \ref{ch:wahl_modell} für die Baumtiefen 2 bis 21 berechnet wird. Die Test- und Trainingsdaten werden dabei im Verhältnis 50:50 geteilt. 
 Das Ergebnis dieser Untersuchung wird grafisch in Form eines Plots ausgewertet: 
 
@@ -482,12 +500,10 @@ Das Ergebnis dieser Untersuchung wird grafisch in Form eines Plots ausgewertet:
 	\end{figure}
 
 Bei Betrachtung von Abbildung \ref{fig:overfitting} stellt man fest, dass ab einer Baumtiefe von 11, die Test- und Trainingsdaten parallel 
-verlaufen. Dieses Verhalten ist zwar kein Indiz für Overfitting. Es ist ein eher ein Zeichen dafür, dass sich die Test- und Trainingsdaten aber einer
-Baumtiefe von 11 stabilisieren. Demnach sollte die maximale Tiefe des Baumes in \textit{RandomForestClassifier} mit Hilfe der Variable \textit{max\textunderscore depth} 
+verlaufen. Dieses Verhalten ist kein Indiz für Overfitting. Es ist eher ein Zeichen dafür, dass sich die Test- und Trainingsdaten ab einer
+Baumtiefe von 11 stabilisieren. Demnach sollte die maximale Tiefe des Baumes in \textit{RandomForestClassifier()} mithilfe der Variable \textit{max\textunderscore depth} 
 auf 11 festgelegt werden.  
  
-
-
 	\subsection{Darstellung als Entscheidungsbaum}
 		\label{ch:entscheidungsbaum}
 
@@ -512,7 +528,7 @@ Am Ende der Datenanalyse wird ein neuronales Netz erstellt. Der erste Schritt be
 \textit{tensorflow} vorzubereiten. Hierbei werden die enthaltenen \textit{bool}- und \textit{int}-Werte in 
 \textit{float}-Werte umgewandelt. Dies wird durch die Funktion \textit{prepare\textunderscore for\textunderscore tensor}
 in der \textit{utils.py} Datei bewärkstelligt. Auf Funktionen der Bibliothek \textit{sklearn.preprocessing} wie 
-beispielsweise \textit{MinMaxScaler} konnte aufgrund des einheitlichen sowie kleinen Wertebereichs verzichtet werden. 
+beispielsweise \textit{MinMaxScaler()} konnte aufgrund des einheitlichen sowie kleinen Wertebereichs verzichtet werden. 
 
 Der zweite Schritt, besteht in der Definition des neuronalen Netzes, dieses ist folgendermaßen aufgebaut:
 
@@ -521,11 +537,12 @@ Der zweite Schritt, besteht in der Definition des neuronalen Netzes, dieses ist 
 In Listing \ref{lst:neuronal_network} werden für den Aufbau des Netzes insgesamt 5
 Schichten verwendet. Je eine \textit{input}- sowie \textit{output}-Schicht. Aufgrund der 
 Größe des Datensatzes werden 3 versteckte Schichten verwendet.
-Die Anzahl der Neuronen innerhalb der versteckten Schichten ist auf 15 festgelegt, bei der \textit{input}-
-Schicht liegt sie bei 9. Die verwendeten Aktivierungsfunktionen beschränken sich auf \textit{relu} und 
+Die Anzahl der Neuronen innerhalb der versteckten Schichten ist auf 20 festgelegt, bei der \textit{input}-
+Schicht liegt sie bei 12. Die verwendeten Aktivierungsfunktionen beschränken sich auf \textit{relu} und 
 \textit{sigmoid}. Die Verlustfunktion \textit{mse} hat sich im Laufe dieser Untersuchung als die beste Wahl herausgestellt.
+Darüber hinaus wird die \textit{batch\textunderscore size} auf 64 gesetzt und es werden 100 Epochen festgelegt. 
 
-Es ergibt sich somit eine berechnete Genauigkeit von 0.69 und ein Verlust von 0.20. Graphisch sieht der Epochenverlauf der Verlust- und 
+Für die Test- und Trainingsdaten ergibt sich somit eine berechnete Genauigkeit von 0.70 und ein Verlust von 0.20. Graphisch sieht der Epochenverlauf der Verlust- und 
 Genauigkeitswerte folgendermaßen aus: 
 
 	\begin{figure}[H]
@@ -540,21 +557,20 @@ In Bezug auf die Testdaten ist anstelle eines Abfalls, eher eine Schwankung erke
 der Trainings- und Testdaten schwankt zwar, ist aber insgesamt stabil. Somit ist in Betracht der Verlust- und Genauigkeitskurven
 kein Overfitting zu verzeichnen. 
 
-
 	\section{Bewertung der Ergebnisse}
 		\label{ch:bewertungs_ergebnisse}
 
 Nach einer ausgiebigen Analyse des vorliegenden Datensatzes können keine eindeutigen Schlüsse aus diesem Datensatz gezogen werden.
 Man kann weder anhand eines bestimmten Features auf eine Affenpocken-Erkrankung schließen, noch besteht ein Zusammenhang/ Korrelationen
-zwischen den Features. Die Datenanalyse mithilfe verschiedener Modelle blieb ebenfalls erfolglos, so konnte anhand verschiedener 
-Feature-Kombinationen und dem Modell \textit{RandomForestClassifier} nur eine Genauigkeit von $\approx 0.70$ ermittelt werden. 
-Die ermittelte Genauigkeit lässt vermuten, dass der vorliegende Datensatz für medizinische Untersuchungen zu gering ist. 
-Overfitting konnte im verwendeten Modell \textit{RandomForestClassifier()} als auch im \textit{Neuronalen Netz} nicht nachgewiesen werden. 
+zwischen den Features. Die Datenanalyse mithilfe verschiedener Modelle blieb ebenfalls erfolglos. So konnte anhand verschiedener 
+Feature-Kombinationen und dem Modell \textit{RandomForestClassifier()} nur eine Genauigkeit von $\approx 0.70$ ermittelt werden. 
+Die ermittelte Genauigkeit ist zu gering, um medizinische Untersuchungen auf diesem Datensatz durchzuführen. 
+Overfitting konnte im verwendeten Modell \textit{RandomForestClassifier()} als auch im neuronalen Netz nicht nachgewiesen werden. 
 
 Der Grund für diese eher erfolglose Datenanalyse liegt vermutlich an der Homogenität der Daten. 
 In Kapitel \ref{ch:genauigkeit_analyse} wurde bereits bewiesen, dass kein Feature ein wirkliches Indiz für eine 
 Affenpocken-Erkrankung darstellt. Es wäre sinnvoller gewesen, den Features \textit{int}-Werte beispielsweise in einem Intervall [0, 5] 
-zu geben. Dabei beschreiben die Werte des Intervalls die Heftigkeit der jeweiligen Symptomatik.
+zu geben, um die Daten vielseitiger/ heterogener zu machen. Dabei beschreiben die Werte des Intervalls die Heftigkeit der jeweiligen Symptomatik.
 
 
 		\pagebreak
